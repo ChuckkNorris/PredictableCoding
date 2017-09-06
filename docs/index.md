@@ -2,7 +2,7 @@
 
 # Properties
 If you need to clean data, take advantage of properties
-<a href="https://github.com/ChuckkNorris/PredictableCoding" class="button"><small>View project on</small> GitHub</a>
+<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
 
 ### Markdown
 
