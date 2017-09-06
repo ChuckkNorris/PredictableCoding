@@ -3,9 +3,11 @@
 # Properties
 If you need to clean data, take advantage of properties
 
+[Movie.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/Entities/Movie/Movie.cs)
+
 <script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
 
-[Movie.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/Entities/Movie/Movie.cs)
+
 
 ### Markdown
 
