@@ -31,7 +31,12 @@ Syntax highlighted code block
 [Link](url) and ![Image](src)
 ```
 
-## What's in a name? Naming stuff is hard!
+# What's in a name? Naming stuff is hard!
+## SubTopics
+- 1 
+- 2
+- 3
+
 
 # Making your code easy to test
 ## SubTopics
@@ -51,3 +56,7 @@ The reason being, if the test fails you don't know if it is because you don't ha
 The Key is to limit your test to really just test one thing at a time.
 
 The following is an example of what NOT to do:
+[BadDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/PredictableCoding/Testing/BadDBSearch.cs)
+
+<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
+
