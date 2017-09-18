@@ -60,3 +60,12 @@ The following is an example of what NOT to do:
 
 <script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
 
+All the functionality is stuck in one function. If an error occurs, there will be no way to know which part failed.
+
+Here is a better version of the code. The different tasks are split up so that each can be tested independently. 
+This allows us to truly know which step fails or passes. 
+In addition, the inclusion of the ```markdown SearchRequest ``` Object helps with readability and escalability if at some point the parameters need to change.
+
+[BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/PredictableCoding/Testing/BetterDBSearch.cs)
+
+<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
