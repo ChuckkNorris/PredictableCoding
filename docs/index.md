@@ -131,6 +131,12 @@ Thought process:
 This is confirmation bias.
 
 When writing test code, we need to be aware of confirmation bias and guard against it. Let's write a test for our ```BetterDBSearch``` class
+[TestSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/PredictableCoding/Testing/TestSearch.cs)
 
+<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
+
+The top function only checks if an item was returned from the search. That means that as long as the search function returns something we will pass.
+This is not really testing our search capabilities properly, we are falling for our confirmation bias.
+The second function on the other hand makes sure that the item retrieved is in fact the one that we intended, truly putting our search function to the test.
 
 How to guard against confirmation bias? It is tricky, and not a straight answer. Just by realizing that we all have inherent bias in us we can try to avoid it before it comes back to haunt us.
