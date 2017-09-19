@@ -64,8 +64,64 @@ All the functionality is stuck in one function. If an error occurs, there will b
 
 Here is a better version of the code. The different tasks are split up so that each can be tested independently. 
 This allows us to truly know which step fails or passes. 
-In addition, the inclusion of the ```markdown SearchRequest ``` Object helps with readability and escalability if at some point the parameters need to change.
+In addition, the inclusion of the ``` SearchRequest ``` Object helps with readability and escalability if at some point the parameters need to change.
 
 [BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/PredictableCoding/Testing/BetterDBSearch.cs)
 
 <script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
+
+### Include fail scenarios
+An important point to always keep in mind is to have a way to know whether your function really executed as intended. It can be as simple as returning an error code.
+We should get into the habit of avoiding those situations where we swallow, mask, or otherwise ignore errors and continue. Let's take a look at the following code.
+
+```
+public void Connect(string connStr) {
+	try{
+		DBConnection.connect(connStr);
+	}
+	catch(Exception){}
+}
+```
+Certainly if there is something wrong with the connection, our code will not error out, and will continue "gracefuly". 
+It might, however, bring trouble down the line as we have no way to check whether a successful call happened. The following is a better example
+
+```
+public class ConnStatus{
+	public bool isValid {get;set;}
+	public string errMsg {get;set;}
+}
+public ConnStatus Connect(string connStr) {
+	var ctx = new ConnStatus();
+	try{
+		DBConnection.connect(connStr);
+		ctx.isValid = true;
+	}
+	catch(Exception e){
+		ctx.isValid=false;
+		ctx.errMsg = e.Message;
+	}
+}
+```
+With the expanded code above, we will not only be able to know whether the connection was successful, but we can also know what caused the error if one were to show up.
+
+### Just because it passes, it does not mean it works
+Let's play a game. Let's say you have code that displays the following prompt:
+
+Here is a sequence of numbers. What is the next correct number?
+- 2
+- 4
+- 8 
+- ??
+
+Which of the following numbers will pass the test?
+- 1
+- 16
+- 9
+- 10
+
+*Count hands*
+The correct answer is 16, 9 and 10, because the algorithm only tests whether the input number is greater than the previous (8).
+So logically you pick 16, and maybe 1 to "test" your hypothesis. 
+But few will pick the remaining because we tend to seek information that re-inforces our current belief. This is confirmation bias.
+
+How to guard against confirmation bias? It is tricky, and not a straight answer. Just by realizing that we all have inherent bias in us we can try to avoid it before it comes back to haunt us.
