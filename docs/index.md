@@ -122,6 +122,15 @@ Which of the following numbers will pass the test?
 *Count hands*
 The correct answer is 16, 9 and 10, because the algorithm only tests whether the input number is greater than the previous (8).
 So logically you pick 16, and maybe 1 to "test" your hypothesis. 
-But few will pick the remaining because we tend to seek information that re-inforces our current belief. This is confirmation bias.
+But few will pick the remaining because we tend to seek information that re-inforces our current belief.
+Thought process:
+1. I assume the pattern is: previous number x 2
+2. I pick 16, and program returns true
+3. Because I guessed correctly, I assume that my understanding of the program is correct
+4. Because I believe to be correct, I don't try again with numbers I "know" will fail (9, 10)
+This is confirmation bias.
+
+When writing test code, we need to be aware of confirmation bias and guard against it. Let's write a test for our ```BetterDBSearch``` class
+
 
 How to guard against confirmation bias? It is tricky, and not a straight answer. Just by realizing that we all have inherent bias in us we can try to avoid it before it comes back to haunt us.

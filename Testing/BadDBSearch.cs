@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PredictableCoding.Testing
+﻿namespace PredictableCoding.Testing
 {
     public class BadDBSearch
     {
-        //keyword = "azure" ; fieldToSearch = "name"
-        public Model BadSearch(string connString, string keyword, string fieldToSearch)
+        //keyword = "round" ; fieldToSearch = {"square" "round" "cylindrical"}
+        public Model BadSearch(string connString, string keyword, List<string> fieldToSearch)
         {
             var conn = new DBConnection(connString);
             conn.Connect();

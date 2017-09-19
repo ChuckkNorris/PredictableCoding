@@ -7,5 +7,6 @@ namespace PredictableCoding.Testing
 {
     public class Model
     {
+        public string value { get; set; }
     }
 }

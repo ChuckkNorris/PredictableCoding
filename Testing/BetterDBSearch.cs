@@ -7,7 +7,7 @@ namespace PredictableCoding.Testing
 {
     public class BetterDBSearch
     {
-        //keyword = "azure" ; fieldToSearch = "name"
+        //keyword = "round" ; fieldToSearch = {"square" "round" "cylindrical"}
         public Model OKSearch(SearchRequest request)
         {
             var result = request.search();
