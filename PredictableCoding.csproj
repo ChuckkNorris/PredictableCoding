@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EasyToTestCode\**" />
+    <Content Remove="EasyToTestCode\**" />
+    <EmbeddedResource Remove="EasyToTestCode\**" />
+    <None Remove="EasyToTestCode\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
