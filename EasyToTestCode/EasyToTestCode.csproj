@@ -66,23 +66,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="EasyToTestCode\packages.config" />
-    <Content Include="EasyToTestCode\Web.config" />
-    <None Include="EasyToTestCode\Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="EasyToTestCode\Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="EasyToTestCode\Properties\AssemblyInfo.cs" />
-    <Compile Include="EasyToTestCode\Testing\BadDBSearch.cs" />
-    <Compile Include="EasyToTestCode\Testing\BetterDBSearch.cs" />
-    <Compile Include="EasyToTestCode\Testing\DBConnection.cs" />
-    <Compile Include="EasyToTestCode\Testing\Model.cs" />
-    <Compile Include="EasyToTestCode\Testing\SearchRequest.cs" />
-    <Compile Include="EasyToTestCode\Testing\TestSearch.cs" />
+    <Compile Include="Classes\BadDBSearch.cs" />
+    <Compile Include="Classes\BetterDBSearch.cs" />
+    <Compile Include="Classes\DBConnection.cs" />
+    <Compile Include="Classes\Model.cs" />
+    <Compile Include="Classes\SearchRequest.cs" />
+    <Compile Include="Classes\TestSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>
