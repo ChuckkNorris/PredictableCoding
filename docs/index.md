@@ -33,32 +33,9 @@ Syntax highlighted code block
 
 # What's in a name? Naming stuff is hard!
 ## SubTopics
-- 1 Layering and Separation of Concerns
-- 2 Handling Large projects
+- 1 
+- 2
 - 3
-
-
-## Layering and Separation of Concerns
-Some of us are familiar with Multitier architecture. The separation of concernes between what we see and how data is manipulated.
-Multitier Architecture is usually presented in the following fashion:
- - Presentation layer : aka UI
- - Application or Service Layer
- - Business Logic Layer
- - Data Access Layer
-
-The real question becomes, how do we truly take advantage of this shcheme? This is where Naming Conventions help us keep our solutions manageable.
-The layers presented are not set in stone, and can be somewhat changed according to a project's needs.
-Let's explore this scenario. We have to develop a site. In it, a user can input their email address and suscribe to an emailing marketing list.
-In our scenario, the client opted to use Bronto as the marketing server. We can communicate with Bronto via web API calls.
-
-### Identifying Steps
-1. User inputs text into a text box, clicks submit
-2. Our MVC server grabs, packages and transforms our data to our liking
-3. The data is sent to be stored
-[Demo]
-- Create Data Access Folder
-- Create a Class called 
-
 
 
 # Making your code easy to test

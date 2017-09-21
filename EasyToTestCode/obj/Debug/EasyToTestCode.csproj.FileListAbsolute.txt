@@ -1,0 +1,2 @@
+C:\Credera\Projects\PredictableCoding\EasyToTestCode\obj\Debug\EasyToTestCode.csprojResolveAssemblyReference.cache
+C:\Credera\Projects\PredictableCoding\EasyToTestCode\obj\Debug\EasyToTestCode.csproj.CoreCompileInputs.cache
