@@ -33,9 +33,55 @@ Syntax highlighted code block
 
 # What's in a name? Naming stuff is hard!
 ## SubTopics
-- 1 
-- 2
-- 3
+- 1 Multitier Architecture
+- 2 Identifying your project's structure
+- 3 Creating
+
+## MultiTier Architecture
+Multitier architecture is a concept in which your visual, application processing, and data management code is physically separated (different classes/projects). 
+The purpose is the separation of concerns, which eventually helps with code management, testing, and Inversion of Control.
+Most applications are separated into the following layers:
+- Presentation layer: AKA UI Layer
+- Application layer: Most commonly as a sub business layer. Ex API definitions
+- Business Layer: Models real life objects and the rules which they interact with each other
+- Data Access Layer: DB, logging, networking
+
+For our client, we implemented what is known as the Helix architecture. I will show you how to implement an Email Signup Service
+
+## Identifying your project's structure
+The client wants us to implement an email signup service. These are the requirements:
+- User needs to enter an email address
+- The email address and other pertinent data (like timestamp) is recorded, packaged, and validated
+- The data packet is sent to a Bronto Email Marketing Server via API for future usage
+
+## Creating our project
+The Helix architecture separates our code into 3 layers:
+- Project
+- Feature
+- Foundation
+
+[Show figure]
+[Start Demo]
+
+### Foundation Layer [Hidden from audience]
+The lowest module. Usually Libraries like JQuery or Database Context.
+- Create Project
+- Create ApiCall class(with Request Obj)
+- Create Request Object
+- Create Response Obj
+
+### Feature Layer [Hidden from audience]
+The equivalent to the business layer
+- Create Iterface IEmailSignup
+- Implement Interface EmailSignup
+- Instantiate Package Object
+- Create Validation Object
+
+
+### Project Layer [Hidden from audience]
+This layer contains modules that are website specific. It can expose the Feature's functionality. IOC
+
+
 
 
 # Making your code easy to test
