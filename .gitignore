@@ -1,7 +1,13 @@
 /.vs
 /.vscode
+
+# Build
 /obj
 /bin
+**/bin/
+**/obj/
+
+
 /EasyToTestCode/bin
 /EasyToTestCode/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 /NamingIsHard/bin
