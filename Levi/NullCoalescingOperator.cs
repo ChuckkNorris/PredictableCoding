@@ -15,34 +15,13 @@ namespace Levi
 
             // Search Movies
             toReturn = this.Movies.Where(movie =>
-                (movie.Name?.Contains(searchTerm) ?? false)
+                (movie.Name?.ToLower().Contains(searchTerm) ?? false)
                 || (movie.Actors?.Any(actor =>
                     (actor.FirstName?.ToLower().Contains(searchTerm) ?? false)
                     || (actor.LastName?.ToLower().Contains(searchTerm) ?? false)
                 ) ?? false)
             );
-
-
-            // toReturn = this.Movies.Where(movie => 
-            //     (movie.Name != null && movie.Name.Contains(searchTerm))
-            //     || (movie.Actors != null && movie.Actors.Any( actor =>
-            //         actor.FirstName != null && actor.FirstName.ToLower().Contains(searchTerm)
-            //         || actor.LastName != null && actor.LastName.ToLower().Contains(searchTerm)
-            //     ))
-            // );
-
-
-
-
-            //     bool hasMovieName = movie.Name?.Contains(searchTerm);
-            //     bool hasActorName = movie?.Actors != null && movie.Actors.Any(actor => 
-            //         actor?.FirstName?.ToLower() == lowerSearchTerm
-            //         || actor?.LastName?.ToLower() == lowerSearchTerm
-            //     );
-            //     return hasMovieName || hasActorName;
-            // });
-
-            // Retrieve Actor names from potentially incomplete data
+            
             return toReturn;
         }
 
@@ -76,11 +55,13 @@ namespace Levi
     {
         public string Name { get; set; }
 
-        public IEnumerable<Actor> Actors { get; set; } // = new List<Actor>();
+        // Initialize your lists
+        public IEnumerable<Actor> Actors { get; set; } = new List<Actor>();
 
         public override string ToString()
         {
-            return $"'{this.Name}' starring {String.Join(", ", this.Actors?.Select(actor => actor.ToString()))}";
+            var actorNames = String.Join(", ", this.Actors.Select(actor => actor.ToString()));
+            return $"'{this.Name}' starring {actorNames}";
         }
     }
 

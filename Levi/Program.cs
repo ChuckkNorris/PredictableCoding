@@ -10,7 +10,8 @@ namespace Levi
         {
             var nullCoalesce = new NullCoalescingOperator();
             var matchingMovies = nullCoalesce.SearchMovies(args?[0]);
-            string formattedMovies = String.Join(", ", matchingMovies.Select(movie => movie.ToString()));
+            string formattedMovies = String.Join("\n", 
+                matchingMovies.Select(movie => movie.ToString()));
             Console.WriteLine($"{formattedMovies}");
         }
     }
