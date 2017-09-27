@@ -3,7 +3,7 @@
 # Properties
 If you need to clean data, take advantage of properties
 
-[Movie.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/Entities/Movie/Movie.cs)
+[Movie.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/PredictableCoding/Entities/Movie/Movie.cs)
 
 <script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
 
@@ -102,7 +102,7 @@ The reason being, if the test fails you don't know if it is because you don't ha
 The Key is to limit your test to really just test one thing at a time.
 
 The following is an example of what NOT to do:
-[BadDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/PredictableCoding/Testing/BadDBSearch.cs)
+[BadDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs)
 
 <script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
 
@@ -112,7 +112,7 @@ Here is a better version of the code. The different tasks are split up so that e
 This allows us to truly know which step fails or passes. 
 In addition, the inclusion of the ``` SearchRequest ``` Object helps with readability and escalability if at some point the parameters need to change.
 
-[BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/PredictableCoding/Testing/BetterDBSearch.cs)
+[BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs)
 
 <script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
 
@@ -177,7 +177,7 @@ Thought process:
 This is confirmation bias.
 
 When writing test code, we need to be aware of confirmation bias and guard against it. Let's write a test for our ```BetterDBSearch``` class
-[TestSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/PredictableCoding/Testing/TestSearch.cs)
+[TestSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/TestSearch.cs)
 
 <script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
 
