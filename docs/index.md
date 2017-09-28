@@ -7,7 +7,9 @@ If you need to clean data, take advantage of properties
 
 <script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
 
+[NullCoalescingOperator.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/Levi/NullCoalescingOperator.cs)
 
+<script src="https://gist.github.com/ChuckkNorris/6d5796ed13e2e5d191ce8a49947bb2c0.js"></script>
 
 ### Markdown
 
