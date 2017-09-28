@@ -15,10 +15,10 @@ namespace Levi
 
             // Search Movies
             toReturn = this.Movies.Where(movie =>
-                (movie.Name?.ToLower().Contains(searchTerm) ?? false)
-                || (movie.Actors?.Any(actor =>
-                    (actor.FirstName?.ToLower().Contains(searchTerm) ?? false)
-                    || (actor.LastName?.ToLower().Contains(searchTerm) ?? false)
+                (movie?.Name?.ToLower().Contains(searchTerm) ?? false)
+                || (movie?.Actors?.Any(actor =>
+                    (actor?.FirstName?.ToLower().Contains(searchTerm) ?? false)
+                    || (actor?.LastName?.ToLower().Contains(searchTerm) ?? false)
                 ) ?? false)
             );
             

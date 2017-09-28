@@ -10,7 +10,7 @@ namespace PredictableCoding.Controllers.Entities
     public class Movie {
         public string Title { get; set; }
         public string Description { get; set; }
-        public Actor Actors { get; set; }
+        public IEnumerable<Actor> Actors { get; set; }
 
 		private string _Genre;
         public string Genre {
