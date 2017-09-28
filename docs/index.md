@@ -37,22 +37,31 @@ Syntax highlighted code block
 - 2 Identifying your project's structure
 - 3 Creating
 
-## MultiTier Architecture
-Multitier architecture is a concept in which your visual, application processing, and data management code is physically separated (different classes/projects). 
-The purpose is the separation of concerns, which eventually helps with code management, testing, and Inversion of Control.
-Most applications are separated into the following layers:
-- Presentation layer: AKA UI Layer
-- Application layer: Most commonly as a sub business layer. Ex API definitions
-- Business Layer: Models real life objects and the rules which they interact with each other
-- Data Access Layer: DB, logging, networking
+## Architecture patterns and practices
+When developing an application, if it is small enough it can be easy just to simply add all your functions and classes in one file.
+But when applications start growing, it can start becoming a challenge to maintain, reuse, and scale code.
+This is why there are frameworks like the multitier architecture that encourage separating code into modular manageable parts
 
-For our client, we implemented what is known as the Helix architecture. I will show you how to implement an Email Signup Service
+So what is the big deal and how does naming conventions come into play?
+Because separating your code into modules inherently creates more objects (files) to keep track of, 
+the new challenge comes in keeping track of and understanding what your modules do.
+This is where naming conventions can help us out.
+
+To illustrate the benefits of adhering to solid naming conventions, I will show you a small demo based on an implementation that we did for one of our clients.
+
+Just a bit about our client and the scenario:
+Our client uses the popular CMS platform called Sitecore. 
+Sitecore has an architecture for managing code called helix. 
+[Show picture]
+
+I will show you the naming conventions we used for the project and how it organically organizes our code.
 
 ## Identifying your project's structure
-The client wants us to implement an email signup service. These are the requirements:
+Our client wants us to implement web component in which a user can sign up for a marketing list and receive regular emails.
+These are the requirements:
 - User needs to enter an email address
-- The email address and other pertinent data (like timestamp) is recorded, packaged, and validated
-- The data packet is sent to a Bronto Email Marketing Server via API for future usage
+- The email address and other pertinent data (like source) is recorded, packaged, and validated
+- The data packet is sent to an Email Marketing Server via API for future usage
 
 ## Creating our project
 The Helix architecture separates our code into 3 layers:
@@ -63,6 +72,8 @@ The Helix architecture separates our code into 3 layers:
 [Show figure]
 [Start Demo]
 
+
+### [Code is found under NamingIsHard_Code project]
 ### Foundation Layer [Hidden from audience]
 The lowest module. Usually Libraries like JQuery or Database Context.
 - Create Project
@@ -71,7 +82,7 @@ The lowest module. Usually Libraries like JQuery or Database Context.
 - Create Response Obj
 
 ### Feature Layer [Hidden from audience]
-The equivalent to the business layer
+The equivalent to the business layer 
 - Create Iterface IEmailSignup
 - Implement Interface EmailSignup
 - Instantiate Package Object
@@ -79,7 +90,7 @@ The equivalent to the business layer
 
 
 ### Project Layer [Hidden from audience]
-This layer contains modules that are website specific. It can expose the Feature's functionality. IOC
+This layer contains files that are specific to the project. Most of the times it is CSS, styles, and templates
 
 
 
