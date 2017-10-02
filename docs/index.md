@@ -38,6 +38,7 @@ Syntax highlighted code block
 - 1 Multitier Architecture
 - 2 Identifying your project's structure
 - 3 Creating
+- 4 chris change
 
 ## Architecture patterns and practices
 When developing an application, if it is small enough it can be easy just to simply add all your functions and classes in one file.
