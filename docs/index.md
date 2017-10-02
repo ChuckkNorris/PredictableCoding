@@ -65,12 +65,78 @@ Syntax highlighted code block
 ```
 
 # What's in a name? Naming stuff is hard!
-## SubTopics
-- 1 Multitier Architecture
-- 2 Identifying your project's structure
-- 3 Creating
 
-## Architecture patterns and practices
+** SubTopics **
+- 1 Why Naming Matters
+- 2 Multitier Architecture Naming Considerations
+- 3 Identifying your project's structure
+- 4 Creating
+
+
+## Why naming matters
+Despite our best intentions, we spend far more time _reading_ others' code than we do writing our own (some have shown the ratio to be as high as 10:1). In light of
+this fact, writing code that can be easily read is an extremely valuable skill.
+
+Can you think of anything in software that doesn't have a name?  Likely not; names are at the root of almost all communication (to the point of being burdensome). 
+What we want to think about today is how we can take the "burden" of naming and turn it into an advantage.
+
+## The Should's, Do's & Don'ts of naming
+
+### The Should's
+- Names should provide intent
+- Names should provide appropriate context
+- Names should distinguish between similar ideas
+- Names should be easy to find
+
+### The Do's
+- Do follow relevant standards (industry, teamwide, etc.)
+- Do rename variables from others' code if you have a better name in mind
+- Do use automation tools (IDE's, scripts, etc.) to make naming & renaming easier
+- Do have teamwide discussions about naming edge cases & standards
+
+### The Don'ts
+- Don't underestimate the value of good names
+- Don't use abbreviated or shortened names to save time
+- Don't use extraneous & redundant information in names
+- Don't rely on comments & documentation to do a name's job
+'''
+	int d = ...; //elapsed time in days
+	vs.
+	int daysSinceLastNotified = ...;
+'''
+
+'''
+public List<int[]> getThem()
+{
+	List<int[]> list1 = new ArrayList<int[]>();
+	foreach (int[] x in theList)
+	{
+		if (x[0] == 4)
+		{
+			list1.add(x);
+		}
+	}
+	
+	return list1;
+}
+
+
+public List<Cell> getFlaggedCells()
+{
+	List<Cell> flaggedCells = new ArrayList<Cell>();
+	foreach (Cell cell : gameBoard)
+	{
+		if (cell.isFlagged())
+		{
+			flaggedCells.add(cell);
+		}
+	}
+	
+	return flaggedCells;
+}
+'''
+
+## Multitier Architecture Naming Considerations
 When developing an application, if it is small enough it can be easy just to simply add all your functions and classes in one file.
 But when applications start growing, it can start becoming a challenge to maintain, reuse, and scale code.
 This is why there are frameworks like the multitier architecture that encourage separating code into modular manageable parts
