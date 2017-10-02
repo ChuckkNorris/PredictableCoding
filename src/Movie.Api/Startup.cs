@@ -25,8 +25,7 @@ namespace Movie.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
+        public void ConfigureServices(IServiceCollection services) {
             services.AddMvc();
             InjectServices(services);
         }
@@ -46,8 +45,7 @@ namespace Movie.Api
             }
         }
 
-        private static IEnumerable<Type> GetAllServiceTypes<T>()
-        {
+        private static IEnumerable<Type> GetAllServiceTypes<T>() {
             return AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly => assembly.GetTypes().Where(type =>
                 typeof(T).IsAssignableFrom(type) && !type.IsInterface
             ));

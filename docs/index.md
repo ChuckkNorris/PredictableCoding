@@ -31,7 +31,8 @@ This makes it easy for other developers to quickly track where the return value 
 # Dependency Injection Tips
 
 1. __Use Reflection to add services to the IOC container__
-	For larger applications, manually adding services to the container can become tedious. Instead, extend an interface and add all classes that implement it to the container
+    For larger applications, manually adding services to the container can become tedious. Instead, extend an interface and add all classes that implement it to the container
+    <script src="https://gist.github.com/ChuckkNorris/b40f4ce134721c25024cb9364088ac63.js"></script>
 2. As a rule of thumb, __limit constructor injected dependencies to 6 or less__
 	If you find yourself needing more than 6, perhaps it's time for a refactor
 3. To avoid circular dependencies, __try to avoid injecting services into other services__
