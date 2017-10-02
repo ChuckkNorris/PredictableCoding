@@ -1,4 +1,42 @@
-# Basics
+# Exception Handling
+1. When to throw e
+
+# Handling Null
+
+1. __Plan for null__
+In general, if a value can be null, expect it to in order to minimize potential null reference exceptions
+<script src="https://gist.github.com/ChuckkNorris/fc22947a9a75e9c5c37af1ee722f3521.js"></script>
+
+2. __Return null when it makes sense__ such as when an entity could not be found
+<script src="https://gist.github.com/ChuckkNorris/aaa8c4ea3451f2e8cb0a90df965b3bed.js"></script>
+
+3. __Avoid passing null values as arguments__
+If you want default logic, use optional arguments instead
+
+# Method Results
+
+1. __Use informative method names__
+2. __Define the variable to return at the top of the method__
+This makes it easy for other developers to quickly track where the return value is being modified
+3. __Establish a convention for default return values__
+   a. If returning a collection, return an empty collection instead of null if no results are found
+   b. If returning a single object that's not found, returning null is often acceptable
+
+# Dependency Injection Tips
+
+1. __Use Reflection to add services to the IOC container__
+For larger applications, manually adding services to the container can become tedious. Instead, extend an interface and add all classes that implement it to the container
+2. As a rule of thumb, __limit constructor injected dependencies to 6 or less__
+If you find yourself needing more than 6, perhaps it'd be better to refactor
+For instance, if you 
+3. To avoid circular dependencies, __try to avoid injecting services into other services__
+
+<script src="https://gist.github.com/ChuckkNorris/a465471971e51200930b5183a698167f.js"></script>
+
+4. When to use different scopes
+	a. Transient - New instance of class each time
+	b. Scoped - New instance that lasts for the entirety of a request
+	c. Singleton - Single instance available for entire application, aka multiple request threads will be using the same instance
 
 # Properties
 If you need to clean data, take advantage of properties
