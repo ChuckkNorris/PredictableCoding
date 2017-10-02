@@ -43,9 +43,9 @@ If you find yourself needing more than 6, perhaps it's time for a refactor
 <script src="https://gist.github.com/ChuckkNorris/a465471971e51200930b5183a698167f.js"></script>
 
 4. When to use different scopes
-	1. Transient - New instance of class each time
-	2. Scoped - New instance that lasts for the entirety of a request
-	3. Singleton - Single instance available for entire application, aka multiple request threads will be using the same instance
+    1. Transient - New instance of class each time
+    2. Scoped - New instance that lasts for the entirety of a request
+    3. Singleton - Single instance available for entire application, aka multiple request threads will be using the same instance
 
 ### Markdown
 
