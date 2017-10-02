@@ -31,17 +31,11 @@ This makes it easy for other developers to quickly track where the return value 
 # Dependency Injection Tips
 
 1. __Use Reflection to add services to the IOC container__
-
 	For larger applications, manually adding services to the container can become tedious. Instead, extend an interface and add all classes that implement it to the container
-
 2. As a rule of thumb, __limit constructor injected dependencies to 6 or less__
-
 	If you find yourself needing more than 6, perhaps it's time for a refactor
-
 3. To avoid circular dependencies, __try to avoid injecting services into other services__
-
 <script src="https://gist.github.com/ChuckkNorris/a465471971e51200930b5183a698167f.js"></script>
-
 4. When to use different scopes
     1. Transient - New instance of class each time
     2. Scoped - New instance that lasts for the entirety of a request
