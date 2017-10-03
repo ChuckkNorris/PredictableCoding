@@ -4,29 +4,30 @@
 # Handling Null
 
 1. __Plan for null__
-
-In general, if a value can be null, expect it to in order to minimize potential null reference exceptions
-<script src="https://gist.github.com/ChuckkNorris/fc22947a9a75e9c5c37af1ee722f3521.js"></script>
-
+    
+    In general, if a value can be null, expect it to be. This will minimize potential null reference exceptions
+    For instance, say you have a list of movies and actors which could potentially have null values, by using the *conditional null operator* and the *null coalescing operator* which will check to make sure the value isn't null before trying to access a child property or execute a chained function. Since this change alters the expression's result to be `Nullable<bool>` instead of `bool`, we can use the `??` to fallback to returning false if a value is null.
+    <script src="https://gist.github.com/ChuckkNorris/fc22947a9a75e9c5c37af1ee722f3521.js"></script>
+    
 2. __Return null when it makes sense__ such as when an entity could not be found
-<script src="https://gist.github.com/ChuckkNorris/aaa8c4ea3451f2e8cb0a90df965b3bed.js"></script>
-
+    <script src="https://gist.github.com/ChuckkNorris/aaa8c4ea3451f2e8cb0a90df965b3bed.js"></script>
+    
 3. __Avoid passing null values as arguments__
-
-If you want default logic, use optional arguments instead
+    
+    If you want default logic, use optional arguments instead
 
 # Method Results
 
 1. __Use informative method names__
 
 2. __Define the variable to return at the top of the method__
-
-This makes it easy for other developers to quickly track where the return value is being modified
+    
+    This makes it easy for other developers to quickly track where the return value is being modified
 
 3. __Establish a convention for default return values__
-
-    1. If returning a collection, return an empty collection instead of null if no results are found
-    2. If returning a single object that's not found, returning null is often acceptable
+    
+    - If returning a collection, return an empty collection instead of null if no results are found
+    - If returning a single object that's not found, returning null is often acceptable
 
 # Dependency Injection Tips
 
