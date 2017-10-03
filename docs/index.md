@@ -19,7 +19,10 @@
 # Method Results
 
 1. __Use informative method names__
-
+    Method names should start with a *verb* followed by details explaining exactly what the method does
+	- `GetUserByFirstName(string firstName);`
+	- `GetUserByEmail(string email);`
+	- `GetUserIfCredentialsAreValid(string username, string password);`
 2. __Define the variable to return at the top of the method__
     
     This makes it easy for other developers to quickly track where the return value is being modified
