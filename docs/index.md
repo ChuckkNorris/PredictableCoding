@@ -6,7 +6,7 @@
 1. __Plan for null__
     
     In general, if a value can be null, expect it to be. This will minimize potential null reference exceptions
-    For instance, say you have a list of movies and actors which could potentially have null values, by using the *conditional null operator* and the *null coalescing operator* which will check to make sure the value isn't null before trying to access a child property or execute a chained function. Since this change alters the expression's result to be `Nullable<bool>` instead of `bool`, we can use the `??` to fallback to returning false if a value is null.
+    For instance, say you have a list of movies and actors which could potentially have null values, by using the *null conditional operator* and the *null coalescing operator* which will check to make sure the value isn't null before trying to access a child property or execute a chained function. Since this change alters the expression's result to be `Nullable<bool>` instead of `bool`, we can use the `??` to fallback to returning false if a value is null.
     <script src="https://gist.github.com/ChuckkNorris/fc22947a9a75e9c5c37af1ee722f3521.js"></script>
     
 2. __Return null when it makes sense__ such as when an entity could not be found
@@ -23,6 +23,7 @@
 	- `GetUserByFirstName(string firstName);`
 	- `GetUserByEmail(string email);`
 	- `GetUserIfCredentialsAreValid(string username, string password);`
+
 2. __Define the variable to return at the top of the method__
     
     This makes it easy for other developers to quickly track where the return value is being modified
