@@ -17,7 +17,8 @@ These tips and tricks are designed to help you write cleaner code, less prone to
     
     In general, if a value can be null, expect it to be. This will minimize potential null reference exceptions
     For instance, say you have a list of movies and actors which could potentially have null values, by using the *null conditional operator* and the *null coalescing operator* which will check to make sure the value isn't null before trying to access a child property or execute a chained function. Since this change alters the expression's result to be `Nullable<bool>` instead of `bool`, we can use the `??` to fallback to returning false if a value is null.
-    <script src="https://gist.github.com/ChuckkNorris/fc22947a9a75e9c5c37af1ee722f3521.js"></script>
+    Consider designing types that expose collection properties to leverage the "Null Object" design pattern (see Collections section)
+	<script src="https://gist.github.com/ChuckkNorris/fc22947a9a75e9c5c37af1ee722f3521.js"></script>
     
 2. __Return null when it makes sense__ such as when an entity could not be found
     <script src="https://gist.github.com/ChuckkNorris/aaa8c4ea3451f2e8cb0a90df965b3bed.js"></script>
@@ -42,42 +43,53 @@ These tips and tricks are designed to help you write cleaner code, less prone to
     
     - If returning a collection, return an empty collection instead of null if no results are found
     - If returning a single object that's not found, returning null is often acceptable
+    - Or, employ the Null-Object pattern as a common practice in your project
+
+
+## Collections
+
+1. __Avoid creating types which expose collection properties without properly initializing the collection__
+
+	- Favor the use of the "Null Object" design pattern for collections
+	- Always return an empty collection by default, to prevent `NullReferenceException` at runtime
+
+[add pointer to code or demo here]
+
+2. __Encapsulate collection behaviors within your domain models__
+
+	- Understand the side-effects of exposing your collection property with a public setter
+	- Leverage .NET ReadOnly Collection types when possible
+      - `.AsReadOnly()`
+      
+[add pointer to code or demo here]
+
+3. __Choose the appropriate .NET collection type__
+
+	- Understand the requirement, e.g. Performance, Fast Lookups, Sortability, Re-arranging and manipulation of elements, etc.
+	- For most cases, you will either have to choose between a `List<T>` or `Dictionary<TKey, TValue>`
+	- Avoid non-generic collection types (legacy .NET collections), such as `ArrayList` --> they require boxing/unboxing which adds overhead
+
+	[add pointer to code or demo here]
+
+4. __Expose collection properties as the "lowest common denominator" interface
+
+	- Unless you expect consumers of your type to directly mutate the items of the collection, you should use read-only forward-only `IEnumerable<T>` as the type of your collection property(s)
+	- Avoid exposing collections as the derived implementation type, such as `List<T>` - those are meant to be internal implementation details
 
 ## Dependency Injection Tips
 
 1. __Use Reflection to add services to the IOC container__
-    For larger applications, manually adding services to the container can become tedious. Instead, extend an interface and add all classes that implement it to the container
+    For larger applications, manually adding services to the container can become tedious, and violates the "Open/Closed" principle. Instead, define a "marker" interface, and add all classes that implement it to the container
     <script src="https://gist.github.com/ChuckkNorris/b40f4ce134721c25024cb9364088ac63.js"></script>
 2. As a rule of thumb, __limit constructor injected dependencies to 6 or less__
-	If you find yourself needing more than 6, perhaps it's time for a refactor
+	If you find yourself needing more than 6, perhaps it's time for a refactoring - your service/type may have too much responsibility and violates the "Single-Responsibility" Principle (SRP)
 3. To avoid circular dependencies, __try to avoid injecting services into other services__
-<script src="https://gist.github.com/ChuckkNorris/a465471971e51200930b5183a698167f.js"></script>
+	<script src="https://gist.github.com/ChuckkNorris/a465471971e51200930b5183a698167f.js"></script>
 4. When to use different scopes
     1. Transient - New instance of class each time
     2. Scoped - New instance that lasts for the entirety of a request
     3. Singleton - Single instance available for entire application, aka multiple request threads will be using the same instance
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
 
 # What's in a name? Naming stuff is hard!
 
@@ -104,26 +116,26 @@ What we want to think about today is how we can take the "burden" of naming and 
 - Names should be easy to find
 
 ### The Do's
-- Do follow relevant standards (industry, teamwide, etc.)
+- Do follow relevant standards (industry, teamwide, domain "ubiquitous language", etc.)
 - Do rename variables from others' code if you have a better name in mind
-- Do use automation tools (IDE's, scripts, etc.) to make naming & renaming easier
+- Do use automation tools (IDE's, scripts, etc.) to make naming & renaming easier (e.g. use the "Rename" refactoring in Visual Studio instead of manual text changing)
 - Do have teamwide discussions about naming edge cases & standards
 
 ### The Don'ts
 - Don't underestimate the value of good names
-- Don't use abbreviated or shortened names to save time
+- Don't use abbreviated or shortened names to save time (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
 - Don't use extraneous & redundant information in names
 - Don't rely on comments & documentation to do a name's job
-```
+```csharp
 	int d = ...; //elapsed time in days
 	vs.
 	int daysSinceLastNotified = ...;
 ```
 
-```
-public List<int[]> getThem()
+```csharp
+public List<int[]> GetThem()
 {
-	List<int[]> list1 = new ArrayList<int[]>();
+	List<int[]> list1 = new List<int[]>();
 	foreach (int[] x in theList)
 	{
 		if (x[0] == 4)
@@ -136,9 +148,9 @@ public List<int[]> getThem()
 }
 
 
-public List<Cell> getFlaggedCells()
+public List<Cell> GetFlaggedCells()
 {
-	List<Cell> flaggedCells = new ArrayList<Cell>();
+	List<Cell> flaggedCells = new List<Cell>();
 	foreach (Cell cell : gameBoard)
 	{
 		if (cell.isFlagged())
@@ -151,7 +163,7 @@ public List<Cell> getFlaggedCells()
 }
 ```
 
-## Multitier Architecture Naming Considerations
+## N-Tier Architecture Naming Considerations
 When developing an application, if it is small enough it can be easy just to simply add all your functions and classes in one file.
 But when applications start growing, it can start becoming a challenge to maintain, reuse, and scale code.
 This is why there are frameworks like the multitier architecture that encourage separating code into modular manageable parts
@@ -245,9 +257,11 @@ In addition, the inclusion of the ``` SearchRequest ``` Object helps with readab
 An important point to always keep in mind is to have a way to know whether your function really executed as intended. It can be as simple as returning an error code.
 We should get into the habit of avoiding those situations where we swallow, mask, or otherwise ignore errors and continue. Let's take a look at the following code.
 
-```
-public void Connect(string connStr) {
-	try{
+```csharp
+public void Connect(string connStr) 
+{
+	try
+	{
 		DBConnection.connect(connStr);
 	}
 	catch(Exception){}
@@ -256,19 +270,24 @@ public void Connect(string connStr) {
 Certainly if there is something wrong with the connection, our code will not error out, and will continue "gracefuly". 
 It might, however, bring trouble down the line as we have no way to check whether a successful call happened. The following is a better example
 
-```
-public class ConnStatus{
+```csharp
+public class ConnStatus
+{
 	public bool isValid {get;set;}
 	public string errMsg {get;set;}
 }
-public ConnStatus Connect(string connStr) {
+
+public ConnStatus Connect(string connStr)
+{
 	var ctx = new ConnStatus();
-	try{
+	try
+	{
 		DBConnection.connect(connStr);
 		ctx.isValid = true;
 	}
-	catch(Exception e){
-		ctx.isValid=false;
+	catch(Exception e)
+	{
+		ctx.isValid = false;
 		ctx.errMsg = e.Message;
 	}
 }
