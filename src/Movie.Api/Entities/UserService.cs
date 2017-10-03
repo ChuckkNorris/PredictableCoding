@@ -15,7 +15,8 @@ namespace Movie.Api.Entities
         }
 
         public UserDto GetUser(string email) {
-            if (string.IsNullOrEmpty(email)) throw new ArgumentException("message", nameof(email));
+            if (string.IsNullOrEmpty(email) || !ValidationUtil.IsValidEmail(email))
+                throw new ArgumentException("Must be a properly formatted email", nameof(email));
             UserDto toReturn = null;
             toReturn = Users?.FirstOrDefault(user => user?.Email == email);
             return toReturn;
