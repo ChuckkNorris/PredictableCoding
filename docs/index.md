@@ -1,7 +1,17 @@
-# Exception Handling
-1. When to throw e
+# Predictable Coding
+These tips and tricks are designed to help you write cleaner code, less prone to errors
 
-# Handling Null
+## Exception Handling
+1. __Throw exceptions when inputs are invalid__
+    
+    You can quickly add null checks by pressing `CTRL`+`.` and selecting __Add null check__. This will enable you to quickly locate any argument specific errors
+    <script src="https://gist.github.com/ChuckkNorris/3f38ffbf8954fc88f8971032dceabcc5.js"></script>
+2. If implemented correctly, __you can leverage exceptions to quickly return user-friendly application error messages__
+    
+	For example, in a Web API, you can create a middleware which catches all exceptions and returns a friendly error messages to inform the user about exactly what went wrong while avoiding the need to implement a custom API response
+	<script src="https://gist.github.com/ChuckkNorris/63cec141e0ed06540f1a11030c73d3f3.js"></script>
+
+## Handling Null
 
 1. __Plan for null__
     
@@ -16,7 +26,7 @@
     
     If you want default logic, use optional arguments instead
 
-# Method Results
+## Method Results
 
 1. __Use informative method names__
     Method names should start with a *verb* followed by details explaining exactly what the method does
@@ -33,7 +43,7 @@
     - If returning a collection, return an empty collection instead of null if no results are found
     - If returning a single object that's not found, returning null is often acceptable
 
-# Dependency Injection Tips
+## Dependency Injection Tips
 
 1. __Use Reflection to add services to the IOC container__
     For larger applications, manually adding services to the container can become tedious. Instead, extend an interface and add all classes that implement it to the container

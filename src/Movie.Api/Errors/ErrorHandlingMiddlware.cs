@@ -33,12 +33,15 @@ namespace Movie.Api.Errors
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             var code = HttpStatusCode.InternalServerError; // 500 if unexpected
-
-            if (exception is ArgumentException) code = HttpStatusCode.NotFound;
+            string userErrorMessage = "Sorry, something went wrong";
+            if (exception is UserFriendlyException) {
+                code = HttpStatusCode.BadRequest;
+                userErrorMessage = exception.Message;
+            }
             //else if (exception is MyUnauthorizedException) code = HttpStatusCode.Unauthorized;
-            //else if (exception is MyException) code = HttpStatusCode.BadRequest;
+            //else if (exception is MyNotFoundException) code = HttpStatusCode.NotFound;
 
-            var result = JsonConvert.SerializeObject(new { error = exception.Message });
+            var result = JsonConvert.SerializeObject(new { error = exception.Message, userError = userErrorMessage });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
             return context.Response.WriteAsync(result);
