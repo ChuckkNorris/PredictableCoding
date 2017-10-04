@@ -88,15 +88,14 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	- Favor the use of the "Null Object" design pattern for collections
 	- Always return an empty collection by default, to prevent `NullReferenceException` at runtime
 
-[add pointer to code or demo here]
-
 2. __Encapsulate collection behaviors within your domain models__
 
 	- Understand the side-effects of exposing your collection property with a public setter
 	- Leverage .NET ReadOnly Collection types when possible
       - `.AsReadOnly()`
       
-[add pointer to code or demo here]
+[DomainModels.cs example](https://github.com/ChuckkNorris/PredictableCoding/blob/d1c73241fc33ffa6cf4ab820f5d9ffe0f509ede0/src/PredictableCoding/Collections/DomainModels.cs#L5-L43)
+
 
 3. __Choose the appropriate .NET collection type__
 
@@ -104,12 +103,30 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	- For most cases, you will either have to choose between a `List<T>` or `Dictionary<TKey, TValue>`
 	- Avoid non-generic collection types (legacy .NET collections), such as `ArrayList` --> they require boxing/unboxing which adds overhead
 
-	[add pointer to code or demo here]
 
-4. __Expose collection properties as the "lowest common denominator" interface
+4. __Expose collection properties as the "lowest common denominator" interface__
 
 	- Unless you expect consumers of your type to directly mutate the items of the collection, you should use read-only forward-only `IEnumerable<T>` as the type of your collection property(s)
 	- Avoid exposing collections as the derived implementation type, such as `List<T>` - those are meant to be internal implementation details
+    
+5. __Use LINQ Any vs. Count__
+
+	- when checking if a collection contains elements, avoid counting, and use the `Any()` extension method instead
+      - it is faster as it only needs to scan the collection till it finds the 1st element
+      - do use predicates to filter your query without adding additional `Where()` calls
+
+	[Count vs Any Code Sample](https://github.com/ChuckkNorris/PredictableCoding/blob/39240c66fa19d53519bcf48bc6a4e1dfd81bb5bc/src/PredictableCoding/Collections/LinqTips.cs#L12-L24)
+
+6. __Know when to use LINQ "Query Syntax" vs. "Fluent" extensinon methods__
+
+	- Query Syntax 
+      - provides a syntactical sugar around the underlying extension methods
+      - may be easier to write for **complex** queries, where lambdas become hard to read
+    - Fluent Extension Methods
+      - makes you more aware of method invocations, making it easier to identify lazy evaluations
+      - encapsulate Where predicates into functions for better semantics and encapsulation
+
+	[Fluent vs Query Syntax Code Sample](https://github.com/ChuckkNorris/PredictableCoding/blob/39240c66fa19d53519bcf48bc6a4e1dfd81bb5bc/src/PredictableCoding/Collections/LinqTips.cs#L26-L40)
 
 ## Dependency Injection Tips
 
@@ -384,7 +401,7 @@ That means that as long as the search function returns something we will pass.
 This is not really testing our search capabilities properly, we are falling for our confirmation bias.
 The second function on the other hand makes sure that the item retrieved is in fact the one that we intended, truly putting our search function to the test.
 
-# Enforcing C# Style Guides With StyleCop
+## Enforcing C# Style Guides With StyleCop
 
 *INTRO* 
 
@@ -401,16 +418,16 @@ The creators of StyleCop highlight the three main principles when developing Sty
 
 
 
-## Installing StyleCop
+### Installing StyleCop
 The easiest way to install the tool is by using Visual Studio's Extension and Updates dialog. Navigate to the Online section and search for StyleCop.
 
 *_SCREENSHOT HERE!_* (How do I add a screenshot to the markdown?)
 
-## Using StyleCop
+### Using StyleCop
 
 Once you have installed StyleCop you will be able run it on the entire solution or any specific project. If the solution is large, it is advised to run for individual projects. This is where the fun begins!
 
-### Accessing StyleCop Settings
+#### Accessing StyleCop Settings
 StyleCop settings are maintained at a project level. To access the settings dialog, right-click on a project and choose "StyleCop Settings" from the menu.
 
 *__Screenshot of dialog__*
@@ -423,12 +440,12 @@ A: Your team goals for maintainability and readibility may be different based on
 
 
 
-### Manually Running StyleCop
+#### Manually Running StyleCop
 StyleCop can be run at the project or solution level. If ran at the solution level, it will enforce the project-specific rules that have been configured. To run StyleCop, right-click the project or solution and choose "Run StyleCop". This could take a bit if the project or solution is large. 
 
 Once Stylecop has finished running, you will see the violations in the error-list. Each violation description will start with a rule number, SAXXXX. Sometimes the rule description is not clear on how to fix the problem exactly. In that case, this site has been useful:  http://stylecop.soyuz5.com/StyleCop%20Rules.html
 
-## Examples
+### Examples
 Need to determine how in depth we'd like to go on these examples.
 
 Full StyleCop run on Infrastructure Project (EB) turned up __19k+__ violations. Breakdown of violations:
