@@ -193,6 +193,7 @@ What we want to think about today is how we can take the "burden" of naming and 
 - Don't use abbreviated or shortened names to save time (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
 - Don't use extraneous & redundant information in names
 - Don't rely on comments & documentation to do a name's job
+    <script src="https://gist.github.com/prangel-code/362405d336027053fa839e73044460b8.js"></script>
 
 ## Multi Tier Architecture Naming Considerations
 When applications start growing, it starts becoming challenge to maintain, reuse, and scale code.
@@ -275,9 +276,23 @@ and less code. An example we have likely all seen is the ternary operator:
 
 <script src="https://gist.github.com/prangel-code/9c4163ea3eaa5daf5e1552dcc06bda26.js"></script>
 
-Let's kick it up a notch:
+Without falling down the rabbit hole of pros and cons of minimal syntax like the ternary operator, let's agree on a few things:
+- The ternary operator takes less space to acheive the same logical result
+- Whether the ternary operator is more or less readable than a traditional if/else statement is _purely_ opinion and preference
+- There are ways we can use ternary operators that we can not use if/else
 
+So where is the balance? Let's look at another example.
 
+## Drawing the line ... or at least trying
+When trying to understand other perspectives, a great place to start is intent. What is the intent behind that perspective? For terse code it is clear that language 
+features like ternary & null coalescing operators intend to package up common logical operations into compact and "intuitive" (up for debate) syntax. In other words,
+if you're a fan of using modularization to reduce code duplication & alleviate code maintenance then there's an argument to be made that you should also be a fan
+of terse code.
+
+And yet, any non-terse coders are probably asking themselves "Yeah, but where do we draw the line?". Which sounds like a great opportunity for another bulleted list:
+- Avoid accepting the excuse "I don't know what that syntax does."
+- Communicate about team standards & best practices
+- Readability is king, terse code should still be clean code
 
 
 # Making your code easy to test
