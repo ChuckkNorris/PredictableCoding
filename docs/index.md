@@ -53,15 +53,14 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	- Favor the use of the "Null Object" design pattern for collections
 	- Always return an empty collection by default, to prevent `NullReferenceException` at runtime
 
-[add pointer to code or demo here]
-
 2. __Encapsulate collection behaviors within your domain models__
 
 	- Understand the side-effects of exposing your collection property with a public setter
 	- Leverage .NET ReadOnly Collection types when possible
       - `.AsReadOnly()`
       
-[add pointer to code or demo here]
+[DomainModels.cs example](https://github.com/ChuckkNorris/PredictableCoding/blob/d1c73241fc33ffa6cf4ab820f5d9ffe0f509ede0/src/PredictableCoding/Collections/DomainModels.cs#L5-L43)
+
 
 3. __Choose the appropriate .NET collection type__
 
@@ -69,12 +68,26 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	- For most cases, you will either have to choose between a `List<T>` or `Dictionary<TKey, TValue>`
 	- Avoid non-generic collection types (legacy .NET collections), such as `ArrayList` --> they require boxing/unboxing which adds overhead
 
-	[add pointer to code or demo here]
 
-4. __Expose collection properties as the "lowest common denominator" interface
+4. __Expose collection properties as the "lowest common denominator" interface__
 
 	- Unless you expect consumers of your type to directly mutate the items of the collection, you should use read-only forward-only `IEnumerable<T>` as the type of your collection property(s)
 	- Avoid exposing collections as the derived implementation type, such as `List<T>` - those are meant to be internal implementation details
+    
+5. __Use LINQ Any vs. Count__
+
+	- when checking if a collection contains elements, avoid counting, and use the `Any()` extension method instead
+      - it is faster as it only needs to scan the collection till it finds the 1st element
+      - do use predicates to filter your query without adding additional `Where()` calls
+
+6. __Know when to use LINQ "Query Syntax" vs. "Fluent" extensinon methods__
+
+	- Query Syntax 
+      - provides a syntactical sugar around the underlying extension methods
+      - may be easier to write for **complex** queries, where lambdas become hard to read
+    - Fluent Extension Methods
+      - makes you more aware of method invocations, making it easier to identify lazy evaluations
+      - encapsulate Where predicates into functions for better semantics and encapsulation
 
 ## Dependency Injection Tips
 
