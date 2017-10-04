@@ -184,7 +184,7 @@ The equivalent to the business layer
 ### Project Layer [Hidden from audience]
 This layer contains files that are specific to the project. Most of the times it is CSS, styles, and templates
 
-# Terse Code, Readable Code, and Drawing the line
+# Terse Code, Verbose Code, and Drawing the line
 As we touched on in the naming discussion, we spend a lot of time reading code. Furthermore, we made the argument that in many cases using more descriptive
 & informative names is a great way to guarantee clearer and, dare I say, _better_ code. So is more always more? Are there times when perhaps _less_ is more?
 Enter, terseness:
@@ -196,7 +196,7 @@ Enter, terseness:
 	*Terse:* _Using minimal ~~words~~ syntax, devoid of superfluity._
 
 Many examples of terse code affirm the perception that it is anti-readable code. And while readability should always be high on any developer's priority list,
-there is an argument to be made that "less readable" code is the way to go. To start, let's clarify what terse code is *NOT*:
+there is an argument to be made that sometimes "less readable" code is preferred over more "verbose". To start, let's clarify what terse code is *NOT*:
 - Writing single letter, abbreviated, or encoded variable names.
 - Horribly abusing white space in a meaningless attempt to minimize lines of code.
 - Chaining together endless sequences of complicated syntax because "it compiles" and does what it's supposed to.
