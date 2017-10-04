@@ -359,7 +359,7 @@ That means that as long as the search function returns something we will pass.
 This is not really testing our search capabilities properly, we are falling for our confirmation bias.
 The second function on the other hand makes sure that the item retrieved is in fact the one that we intended, truly putting our search function to the test.
 
-# Enforcing C# Style Guides With StyleCop
+## Enforcing C# Style Guides With StyleCop
 
 *INTRO* 
 
@@ -376,16 +376,16 @@ The creators of StyleCop highlight the three main principles when developing Sty
 
 
 
-## Installing StyleCop
+### Installing StyleCop
 The easiest way to install the tool is by using Visual Studio's Extension and Updates dialog. Navigate to the Online section and search for StyleCop.
 
 *_SCREENSHOT HERE!_* (How do I add a screenshot to the markdown?)
 
-## Using StyleCop
+### Using StyleCop
 
 Once you have installed StyleCop you will be able run it on the entire solution or any specific project. If the solution is large, it is advised to run for individual projects. This is where the fun begins!
 
-### Accessing StyleCop Settings
+#### Accessing StyleCop Settings
 StyleCop settings are maintained at a project level. To access the settings dialog, right-click on a project and choose "StyleCop Settings" from the menu.
 
 *__Screenshot of dialog__*
@@ -398,12 +398,12 @@ A: Your team goals for maintainability and readibility may be different based on
 
 
 
-### Manually Running StyleCop
+#### Manually Running StyleCop
 StyleCop can be run at the project or solution level. If ran at the solution level, it will enforce the project-specific rules that have been configured. To run StyleCop, right-click the project or solution and choose "Run StyleCop". This could take a bit if the project or solution is large. 
 
 Once Stylecop has finished running, you will see the violations in the error-list. Each violation description will start with a rule number, SAXXXX. Sometimes the rule description is not clear on how to fix the problem exactly. In that case, this site has been useful:  http://stylecop.soyuz5.com/StyleCop%20Rules.html
 
-## Examples
+### Examples
 Need to determine how in depth we'd like to go on these examples.
 
 Full StyleCop run on Infrastructure Project (EB) turned up __19k+__ violations. Breakdown of violations:
