@@ -260,15 +260,25 @@ Enter, terseness:
 
 ## What is "terse" code?
 
-	*Terse:* _Using minimal ~~words~~ syntax, devoid of superfluity._
+	__Terse:__ *Using minimal ~~words~~ syntax, devoid of superfluity.*
 
 Many examples of terse code affirm the perception that it is anti-readable code. And while readability should always be high on any developer's priority list,
-there is an argument to be made that sometimes "less readable" code is preferred over more "verbose". To start, let's clarify what terse code is *NOT*:
+there is an argument to be made that sometimes less readable code is preferred over verbose code.
+
+Before moving on, let's clarify what terse code is *NOT*:
 - Writing single letter, abbreviated, or encoded variable names.
 - Horribly abusing white space in a meaningless attempt to minimize lines of code.
-- Chaining together endless sequences of complicated syntax because "it compiles" and does what it's supposed to.
+- Indiscriminately chaining sequences of complicated syntax because "it compiles" and does what it's supposed to.
 
-Within
+Instead, let's consider terse code to be code that takes advantages of higher level language features to abstract common logical patterns, resulting in less syntax
+and less code. An example we have likely all seen is the ternary operator:
+
+<script src="https://gist.github.com/prangel-code/9c4163ea3eaa5daf5e1552dcc06bda26.js"></script>
+
+Let's kick it up a notch:
+
+
+
 
 # Making your code easy to test
 ## SubTopics
