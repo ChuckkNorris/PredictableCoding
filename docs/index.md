@@ -30,11 +30,10 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	For example, say you're searching on a collection of Movies which could contain null values:
 
 	[MovieService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/MovieService.cs)
-    
-	To ensure that you never throw null exceptions, expect that every value can be null and handle it appropriately
 
 	<script src="https://gist.github.com/ChuckkNorris/251330525d59cda7468cb4fa95bcd9a2.js"></script>
-	
+    
+	To ensure that you never throw null exceptions, expect that every value can be null and handle it appropriately
 
 	[MovieService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/MovieService.cs)
 
@@ -109,12 +108,21 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 ## Dependency Injection Tips
 
 1. __Use Reflection to add services to the IOC container__
+
     For larger applications, manually adding services to the container can become tedious, and violates the "Open/Closed" principle. Instead, define a "marker" interface, and add all classes that implement it to the container
+
+    [Startup.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Startup.cs)
+
     <script src="https://gist.github.com/ChuckkNorris/b40f4ce134721c25024cb9364088ac63.js"></script>
+
 2. As a rule of thumb, __limit constructor injected dependencies to 6 or less__
+
 	If you find yourself needing more than 6, perhaps it's time for a refactoring - your service/type may have too much responsibility and violates the "Single-Responsibility" Principle (SRP)
-3. To avoid circular dependencies, __try to avoid injecting services into other services__
+
+3. To prevent circular dependencies, __don't inject services into other services__
+
 	<script src="https://gist.github.com/ChuckkNorris/a465471971e51200930b5183a698167f.js"></script>
+
 4. When to use different scopes
     1. Transient - New instance of class each time
 	    
