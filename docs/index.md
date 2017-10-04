@@ -95,9 +95,9 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 
 ** SubTopics **
 - 1 Why Naming Matters
-- 2 Multitier Architecture Naming Considerations
-- 3 Identifying your project's structure
-- 4 Creating
+- 2 The Should's, Do's & Don'ts of naming
+- 3 Multi Tier Architecture Naming Considerations
+- 4 Demo
 
 
 ## Why naming matters
@@ -163,31 +163,33 @@ public List<Cell> getFlaggedCells()
 }
 ```
 
-## N-Tier Architecture Naming Considerations
-When developing an application, if it is small enough it can be easy just to simply add all your functions and classes in one file.
-But when applications start growing, it can start becoming a challenge to maintain, reuse, and scale code.
+## Multi Tier Architecture Naming Considerations
+When applications start growing, it starts becoming challenge to maintain, reuse, and scale code.
 This is why there are frameworks like the multitier architecture that encourage separating code into modular manageable parts
 
 So what is the big deal and how does naming conventions come into play?
-Because separating your code into modules inherently creates more objects (files) to keep track of, 
-the new challenge comes in keeping track of and understanding what your modules do.
-This is where naming conventions can help us out.
+Separating your code into modules inherently creates more objects (files)
+New challenge comes in keeping track of and understanding what your modules do
+This is where naming conventions can help us out
 
-To illustrate the benefits of adhering to solid naming conventions, I will show you a small demo based on an implementation that we did for one of our clients.
+To illustrate: I will show you a small demo based on an implementation that we did for one of our clients
 
-Just a bit about our client and the scenario:
+Let me describe the scenario:
 Our client uses the popular CMS platform called Sitecore. 
-Sitecore has an architecture for managing code called helix. 
-[Show picture]
+Sitecore has an architecture for managing code called helix.
 
-I will show you the naming conventions we used for the project and how it organically organizes our code.
+The Helix architecture separates our code into 3 layers
+- Project
+- Feature
+- Foundation
+
 
 ## Identifying your project's structure
 Our client wants us to implement web component in which a user can sign up for a marketing list and receive regular emails.
 These are the requirements:
-- User needs to enter an email address
-- The email address and other pertinent data (like source) is recorded, packaged, and validated
-- The data packet is sent to an Email Marketing Server via API for future usage
+- User needs to enter an email address [UI, html]
+- The email address and other pertinent data (like source) is recorded, packaged, and validated [controller, models]
+- The data packet is sent to an Email Marketing Server via API for future usage [data context, api calls]
 
 ## Creating our project
 The Helix architecture separates our code into 3 layers:
@@ -241,7 +243,7 @@ The Key is to limit your test to really just test one thing at a time.
 The following is an example of what NOT to do:
 [BadDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs)
 
-<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
+<script src="https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs"></script>
 
 All the functionality is stuck in one function. If an error occurs, there will be no way to know which part failed.
 
@@ -251,7 +253,7 @@ In addition, the inclusion of the ``` SearchRequest ``` Object helps with readab
 
 [BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs)
 
-<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
+<script src="https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs"></script>
 
 ### Include fail scenarios
 An important point to always keep in mind is to have a way to know whether your function really executed as intended. It can be as simple as returning an error code.
@@ -295,38 +297,17 @@ public ConnStatus Connect(string connStr)
 With the expanded code above, we will not only be able to know whether the connection was successful, but we can also know what caused the error if one were to show up.
 
 ### Just because it passes, it does not mean it works
-Let's play a game. Let's say you have code that displays the following prompt:
+We tend to seek information that re-inforces our current belief.
+If during our validation we make an assumption, we look for ways to confirm that it is true.
+We tend to avoid tests that will make our assumption invalid
 
-Here is a sequence of numbers. What is the next correct number?
-- 2
-- 4
-- 8 
-- ??
 
-Which of the following numbers will pass the test?
-- 1
-- 16
-- 9
-- 10
+When writing test code, we need to need to include tests that will invalidate our assumption.
+Let's take a look at ```BetterDBSearch``` class
 
-*Count hands*
-The correct answer is 16, 9 and 10, because the algorithm only tests whether the input number is greater than the previous (8).
-So logically you pick 16, and maybe 1 to "test" your hypothesis. 
-But few will pick the remaining because we tend to seek information that re-inforces our current belief.
-Thought process:
-1. I assume the pattern is: previous number x 2
-2. I pick 16, and program returns true
-3. Because I guessed correctly, I assume that my understanding of the program is correct
-4. Because I believe to be correct, I don't try again with numbers I "know" will fail (9, 10)
-This is confirmation bias.
+[TestSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/src/EasyToTestCode_UnitTest/TestSearch.cs)
 
-When writing test code, we need to be aware of confirmation bias and guard against it. Let's write a test for our ```BetterDBSearch``` class
-[TestSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/TestSearch.cs)
-
-<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
-
-The top function only checks if an item was returned from the search. That means that as long as the search function returns something we will pass.
+The top function only checks if an item was returned from the search. 
+That means that as long as the search function returns something we will pass.
 This is not really testing our search capabilities properly, we are falling for our confirmation bias.
 The second function on the other hand makes sure that the item retrieved is in fact the one that we intended, truly putting our search function to the test.
-
-How to guard against confirmation bias? It is tricky, and not a straight answer. Just by realizing that we all have inherent bias in us we can try to avoid it before it comes back to haunt us.
