@@ -156,42 +156,6 @@ What we want to think about today is how we can take the "burden" of naming and 
 - Don't use abbreviated or shortened names to save time (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
 - Don't use extraneous & redundant information in names
 - Don't rely on comments & documentation to do a name's job
-```csharp
-	int d = ...; //elapsed time in days
-	vs.
-	int daysSinceLastNotified = ...;
-```
-
-```csharp
-public List<int[]> GetThem()
-{
-	List<int[]> list1 = new List<int[]>();
-	foreach (int[] x in theList)
-	{
-		if (x[0] == 4)
-		{
-			list1.add(x);
-		}
-	}
-	
-	return list1;
-}
-
-
-public List<Cell> GetFlaggedCells()
-{
-	List<Cell> flaggedCells = new List<Cell>();
-	foreach (Cell cell : gameBoard)
-	{
-		if (cell.isFlagged())
-		{
-			flaggedCells.add(cell);
-		}
-	}
-	
-	return flaggedCells;
-}
-```
 
 ## Multi Tier Architecture Naming Considerations
 When applications start growing, it starts becoming challenge to maintain, reuse, and scale code.
@@ -250,8 +214,24 @@ The equivalent to the business layer
 ### Project Layer [Hidden from audience]
 This layer contains files that are specific to the project. Most of the times it is CSS, styles, and templates
 
+# Terse Code, Readable Code, and Drawing the line
+As we touched on in the naming discussion, we spend a lot of time reading code. Furthermore, we made the argument that in many cases using more descriptive
+& informative names is a great way to guarantee clearer and, dare I say, _better_ code. So is more always more? Are there times when perhaps _less_ is more?
+Enter, terseness:
 
+<script src="https://gist.github.com/prangel-code/77e33ee3df369a3eaf28a749c3b81f85.js"></script>
 
+## What is "terse" code?
+
+	*Terse:* _Using minimal ~~words~~ syntax, devoid of superfluity._
+
+Many examples of terse code affirm the perception that it is anti-readable code. And while readability should always be high on any developer's priority list,
+there is an argument to be made that "less readable" code is the way to go. To start, let's clarify what terse code is *NOT*:
+- Writing single letter, abbreviated, or encoded variable names.
+- Horribly abusing white space in a meaningless attempt to minimize lines of code.
+- Chaining together endless sequences of complicated syntax because "it compiles" and does what it's supposed to.
+
+Within
 
 # Making your code easy to test
 ## SubTopics
@@ -341,3 +321,18 @@ The top function only checks if an item was returned from the search.
 That means that as long as the search function returns something we will pass.
 This is not really testing our search capabilities properly, we are falling for our confirmation bias.
 The second function on the other hand makes sure that the item retrieved is in fact the one that we intended, truly putting our search function to the test.
+
+# Enforcing C# Style Guides With StyleCop
+
+*INTRO* ---TODO
+
+ StyleCop rules tend to encourage whitespace and openness in the code as well as lots of comments and documentation.
+
+## Installing StyleCop
+The easiest way to install the tool is by using Visual Studio's Extension and Updates dialog. Navigate to the Online section and search for StyleCop.
+
+*_SCREENSHOT HERE!_*
+
+## Using StyleCop
+Once you have installed StyleCop you will be able run it on the entire solution or any specific project. If the solution is large, it is advised to run for individual projects. This is where the fun begins!
+
