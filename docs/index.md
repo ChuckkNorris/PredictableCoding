@@ -2,13 +2,21 @@
 These tips and tricks are designed to help you write cleaner code, less prone to errors
 
 ## Exception Handling
+
 1. __Throw exceptions when inputs are invalid__
     
     You can quickly add null checks by pressing `CTRL`+`.` and selecting __Add null check__. This will enable you to quickly locate any argument specific errors
+	
+	[UserService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/UserService.cs)
+
     <script src="https://gist.github.com/ChuckkNorris/3f38ffbf8954fc88f8971032dceabcc5.js"></script>
+
 2. If implemented correctly, __you can leverage exceptions to quickly return user-friendly application error messages__
     
 	For example, in a Web API, you can create a middleware which catches all exceptions and returns a friendly error messages to inform the user about exactly what went wrong while avoiding the need to implement a custom API response
+
+    [ErrorHandlingMiddlware.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Errors/ErrorHandlingMiddlware.cs)
+
 	<script src="https://gist.github.com/ChuckkNorris/63cec141e0ed06540f1a11030c73d3f3.js"></script>
 
 ## Handling Null
@@ -18,14 +26,33 @@ These tips and tricks are designed to help you write cleaner code, less prone to
     In general, if a value can be null, expect it to be. This will minimize potential null reference exceptions
     For instance, say you have a list of movies and actors which could potentially have null values, by using the *null conditional operator* and the *null coalescing operator* which will check to make sure the value isn't null before trying to access a child property or execute a chained function. Since this change alters the expression's result to be `Nullable<bool>` instead of `bool`, we can use the `??` to fallback to returning false if a value is null.
     Consider designing types that expose collection properties to leverage the "Null Object" design pattern (see Collections section)
+
+	For example, say you're searching on a collection of Movies which could contain null values:
+
+	[MovieService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/MovieService.cs)
+    
+	To ensure that you never throw null exceptions, expect that every value can be null and handle it appropriately
+
+	<script src="https://gist.github.com/ChuckkNorris/251330525d59cda7468cb4fa95bcd9a2.js"></script>
+	
+
+	[MovieService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/MovieService.cs)
+
 	<script src="https://gist.github.com/ChuckkNorris/fc22947a9a75e9c5c37af1ee722f3521.js"></script>
     
 2. __Return null when it makes sense__ such as when an entity could not be found
+	
+	[UserService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/UserService.cs)
+
     <script src="https://gist.github.com/ChuckkNorris/aaa8c4ea3451f2e8cb0a90df965b3bed.js"></script>
     
-3. __Avoid passing null values as arguments__
+3. __Avoid passing null values as arguments__, but expect that arguments might be null and handle them appropriately
     
-    If you want default logic, use optional arguments instead
+	For example, we make sure the email address isn't null or empty before instantiating the Regular Expression so that it doesn't throw a Null Reference exception and it also saves a few cycles performance-wise
+
+	[Utilities.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Utilities.cs)
+    <script src="https://gist.github.com/ChuckkNorris/17a7b2a6f74a73e407cea23a584b6cbc.js"></script>
+    
 
 ## Method Results
 
@@ -38,6 +65,9 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 2. __Define the variable to return at the top of the method__
     
     This makes it easy for other developers to quickly track where the return value is being modified
+
+	[Utilities.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Utilities.cs)
+    <script src="https://gist.github.com/ChuckkNorris/17a7b2a6f74a73e407cea23a584b6cbc.js"></script>
 
 3. __Establish a convention for default return values__
     
