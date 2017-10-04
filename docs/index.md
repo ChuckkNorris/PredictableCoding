@@ -126,6 +126,42 @@ What we want to think about today is how we can take the "burden" of naming and 
 - Don't use abbreviated or shortened names to save time (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
 - Don't use extraneous & redundant information in names
 - Don't rely on comments & documentation to do a name's job
+```
+	int d = ...; //elapsed time in days
+	vs.
+	int daysSinceLastNotified = ...;
+```
+
+```
+public List<int[]> getThem()
+{
+	List<int[]> list1 = new ArrayList<int[]>();
+	foreach (int[] x in theList)
+	{
+		if (x[0] == 4)
+		{
+			list1.add(x);
+		}
+	}
+	
+	return list1;
+}
+
+
+public List<Cell> getFlaggedCells()
+{
+	List<Cell> flaggedCells = new ArrayList<Cell>();
+	foreach (Cell cell : gameBoard)
+	{
+		if (cell.isFlagged())
+		{
+			flaggedCells.add(cell);
+		}
+	}
+	
+	return flaggedCells;
+}
+```
 
 ## N-Tier Architecture Naming Considerations
 When developing an application, if it is small enough it can be easy just to simply add all your functions and classes in one file.
