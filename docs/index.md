@@ -184,8 +184,22 @@ The equivalent to the business layer
 ### Project Layer [Hidden from audience]
 This layer contains files that are specific to the project. Most of the times it is CSS, styles, and templates
 
+#Terse Code, Readable Code, and Drawing the line
+As we touched on in the naming discussion, we spend a lot of time reading code. Furthermore, we made the argument that in many cases using more descriptive
+& informative names is a great way to guarantee clearer and, dare I say, _better_ code. So is more always more? Are there times when perhaps _less_ is more?
+Enter, terseness:
 
+<script src="https://gist.github.com/prangel-code/77e33ee3df369a3eaf28a749c3b81f85.js"></script>
 
+## What is "terse" code?
+Let's start with what it shouldn't be:
+- Writing single letter, abbreviated, or encoded variable names. That's bad naming.
+- Horribly abusing white space in a meaningless attempt to minimize lines of code. That's bad styling, and minifying.
+- Chaining together endless sequences of complicated syntax because "it compiles". It's also mean, and painful.
+
+https://www.youtube.com/embed/s93EZfNvOyw?start=0&end=3
+
+Within
 
 # Making your code easy to test
 ## SubTopics
