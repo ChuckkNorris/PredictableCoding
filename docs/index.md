@@ -115,6 +115,8 @@ These tips and tricks are designed to help you write cleaner code, less prone to
       - it is faster as it only needs to scan the collection till it finds the 1st element
       - do use predicates to filter your query without adding additional `Where()` calls
 
+	[Count vs Any Code Sample](https://github.com/ChuckkNorris/PredictableCoding/blob/39240c66fa19d53519bcf48bc6a4e1dfd81bb5bc/src/PredictableCoding/Collections/LinqTips.cs#L12-L24)
+
 6. __Know when to use LINQ "Query Syntax" vs. "Fluent" extensinon methods__
 
 	- Query Syntax 
@@ -123,6 +125,8 @@ These tips and tricks are designed to help you write cleaner code, less prone to
     - Fluent Extension Methods
       - makes you more aware of method invocations, making it easier to identify lazy evaluations
       - encapsulate Where predicates into functions for better semantics and encapsulation
+
+	[Fluent vs Query Syntax Code Sample](https://github.com/ChuckkNorris/PredictableCoding/blob/39240c66fa19d53519bcf48bc6a4e1dfd81bb5bc/src/PredictableCoding/Collections/LinqTips.cs#L26-L40)
 
 ## Dependency Injection Tips
 
