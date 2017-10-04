@@ -19,6 +19,12 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 
 	<script src="https://gist.github.com/ChuckkNorris/63cec141e0ed06540f1a11030c73d3f3.js"></script>
 
+	Assuming that the email is expected to be validated by the client application, the request with user-friendly error and request specific error are returned
+	![User Friendly Error](https://image.prntscr.com/image/sH3UmSr7RK_IkyQKHtxTQg.png)
+
+	Here's a request with an invalid username or password but a correctly formatted email
+	![Incorrect Password](https://image.prntscr.com/image/sQ4SKUvdTIqlXNA8RkY--A.png)
+	
 ## Handling Null
 
 1. __Plan for null__
