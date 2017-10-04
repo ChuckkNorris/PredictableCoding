@@ -2,15 +2,29 @@
 These tips and tricks are designed to help you write cleaner code, less prone to errors
 
 ## Exception Handling
+
 1. __Throw exceptions when inputs are invalid__
     
     You can quickly add null checks by pressing `CTRL`+`.` and selecting __Add null check__. This will enable you to quickly locate any argument specific errors
+	
+	[UserService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/UserService.cs)
+
     <script src="https://gist.github.com/ChuckkNorris/3f38ffbf8954fc88f8971032dceabcc5.js"></script>
+
 2. If implemented correctly, __you can leverage exceptions to quickly return user-friendly application error messages__
     
 	For example, in a Web API, you can create a middleware which catches all exceptions and returns a friendly error messages to inform the user about exactly what went wrong while avoiding the need to implement a custom API response
+
+    [ErrorHandlingMiddlware.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Errors/ErrorHandlingMiddlware.cs)
+
 	<script src="https://gist.github.com/ChuckkNorris/63cec141e0ed06540f1a11030c73d3f3.js"></script>
 
+	Assuming that the email is expected to be validated by the client application, the request with user-friendly error and request specific error are returned
+	![User Friendly Error](https://image.prntscr.com/image/sH3UmSr7RK_IkyQKHtxTQg.png)
+
+	Here's a request with an invalid username or password but a correctly formatted email
+	![Incorrect Password](https://image.prntscr.com/image/sQ4SKUvdTIqlXNA8RkY--A.png)
+	
 ## Handling Null
 
 1. __Plan for null__
@@ -18,14 +32,32 @@ These tips and tricks are designed to help you write cleaner code, less prone to
     In general, if a value can be null, expect it to be. This will minimize potential null reference exceptions
     For instance, say you have a list of movies and actors which could potentially have null values, by using the *null conditional operator* and the *null coalescing operator* which will check to make sure the value isn't null before trying to access a child property or execute a chained function. Since this change alters the expression's result to be `Nullable<bool>` instead of `bool`, we can use the `??` to fallback to returning false if a value is null.
     Consider designing types that expose collection properties to leverage the "Null Object" design pattern (see Collections section)
+
+	For example, say you're searching on a collection of Movies which could contain null values:
+
+	[MovieService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/MovieService.cs)
+
+	<script src="https://gist.github.com/ChuckkNorris/251330525d59cda7468cb4fa95bcd9a2.js"></script>
+    
+	To ensure that you never throw null exceptions, expect that every value can be null and handle it appropriately
+
+	[MovieService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/MovieService.cs)
+
 	<script src="https://gist.github.com/ChuckkNorris/fc22947a9a75e9c5c37af1ee722f3521.js"></script>
     
 2. __Return null when it makes sense__ such as when an entity could not be found
+	
+	[UserService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/UserService.cs)
+
     <script src="https://gist.github.com/ChuckkNorris/aaa8c4ea3451f2e8cb0a90df965b3bed.js"></script>
     
-3. __Avoid passing null values as arguments__
+3. __Avoid passing null values as arguments__, but expect that arguments might be null and handle them appropriately
     
-    If you want default logic, use optional arguments instead
+	For example, we make sure the email address isn't null or empty before instantiating the Regular Expression so that it doesn't throw a Null Reference exception and it also saves a few cycles performance-wise
+
+	[Utilities.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Utilities.cs)
+    <script src="https://gist.github.com/ChuckkNorris/17a7b2a6f74a73e407cea23a584b6cbc.js"></script>
+    
 
 ## Method Results
 
@@ -38,6 +70,9 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 2. __Define the variable to return at the top of the method__
     
     This makes it easy for other developers to quickly track where the return value is being modified
+
+	[Utilities.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Utilities.cs)
+    <script src="https://gist.github.com/ChuckkNorris/17a7b2a6f74a73e407cea23a584b6cbc.js"></script>
 
 3. __Establish a convention for default return values__
     
@@ -92,25 +127,57 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 ## Dependency Injection Tips
 
 1. __Use Reflection to add services to the IOC container__
+
     For larger applications, manually adding services to the container can become tedious, and violates the "Open/Closed" principle. Instead, define a "marker" interface, and add all classes that implement it to the container
+
+    [Startup.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Startup.cs)
+
     <script src="https://gist.github.com/ChuckkNorris/b40f4ce134721c25024cb9364088ac63.js"></script>
+
 2. As a rule of thumb, __limit constructor injected dependencies to 6 or less__
+
 	If you find yourself needing more than 6, perhaps it's time for a refactoring - your service/type may have too much responsibility and violates the "Single-Responsibility" Principle (SRP)
-3. To avoid circular dependencies, __try to avoid injecting services into other services__
+
+3. To prevent circular dependencies, __don't inject services into other services__
+
 	<script src="https://gist.github.com/ChuckkNorris/a465471971e51200930b5183a698167f.js"></script>
+
 4. When to use different scopes
     1. Transient - New instance of class each time
+	    
+		If you're not sure what to use, use a transient to ensure that each class has its own clean instance of a particular dependency
+
     2. Scoped - New instance that lasts for the entirety of a request
-    3. Singleton - Single instance available for entire application, aka multiple request threads will be using the same instance
 
+	    Say that you've designed your application to batch save changes to the DbContext made by multiple services. With a scoped dependency, the same instance is used
+		once per request, right before the request ends so that the same context service accesses the same context for the duration , you might scope your context to be Transient
 
+		```
+		// Startup.cs
+		// Configure DbContext as scoped dependency
+		services.AddScoped<MyDbContext>();
+
+		// MovieController.cs
+		// Save the movie
+		movieService.SaveMovie(newMovie);
+		userService.UpdateUserMoviePreferences(userId, newMovie);
+		// Commits both changes in single request to database
+		await this._context.SaveChangesAsync();
+		```
+
+    3. Singleton - Single instance available for entire application aka multiple request threads will be using the same instance. 
+	
+	    Use this sparingly, but one reason to use singletons might be logging.
+	    Say you have a single file that you log all exceptions to on the server. With a singleton scoped service, the exact same instance of your logger will be used for writing exceptions from all requests; This enables you to more easily build a thread-safe file writer and ensure that two different instances aren't trying to write to the same file.
+
+		
 # What's in a name? Naming stuff is hard!
 
 ** SubTopics **
 - 1 Why Naming Matters
-- 2 Multitier Architecture Naming Considerations
-- 3 Identifying your project's structure
-- 4 Creating
+- 2 The Should's, Do's & Don'ts of naming
+- 3 Multi Tier Architecture Naming Considerations
+- 4 Demo
 
 
 ## Why naming matters
@@ -139,68 +206,34 @@ What we want to think about today is how we can take the "burden" of naming and 
 - Don't use abbreviated or shortened names to save time (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
 - Don't use extraneous & redundant information in names
 - Don't rely on comments & documentation to do a name's job
-```csharp
-	int d = ...; //elapsed time in days
-	vs.
-	int daysSinceLastNotified = ...;
-```
 
-```csharp
-public List<int[]> GetThem()
-{
-	List<int[]> list1 = new List<int[]>();
-	foreach (int[] x in theList)
-	{
-		if (x[0] == 4)
-		{
-			list1.add(x);
-		}
-	}
-	
-	return list1;
-}
-
-
-public List<Cell> GetFlaggedCells()
-{
-	List<Cell> flaggedCells = new List<Cell>();
-	foreach (Cell cell : gameBoard)
-	{
-		if (cell.isFlagged())
-		{
-			flaggedCells.add(cell);
-		}
-	}
-	
-	return flaggedCells;
-}
-```
-
-## N-Tier Architecture Naming Considerations
-When developing an application, if it is small enough it can be easy just to simply add all your functions and classes in one file.
-But when applications start growing, it can start becoming a challenge to maintain, reuse, and scale code.
+## Multi Tier Architecture Naming Considerations
+When applications start growing, it starts becoming challenge to maintain, reuse, and scale code.
 This is why there are frameworks like the multitier architecture that encourage separating code into modular manageable parts
 
 So what is the big deal and how does naming conventions come into play?
-Because separating your code into modules inherently creates more objects (files) to keep track of, 
-the new challenge comes in keeping track of and understanding what your modules do.
-This is where naming conventions can help us out.
+Separating your code into modules inherently creates more objects (files)
+New challenge comes in keeping track of and understanding what your modules do
+This is where naming conventions can help us out
 
-To illustrate the benefits of adhering to solid naming conventions, I will show you a small demo based on an implementation that we did for one of our clients.
+To illustrate: I will show you a small demo based on an implementation that we did for one of our clients
 
-Just a bit about our client and the scenario:
+Let me describe the scenario:
 Our client uses the popular CMS platform called Sitecore. 
-Sitecore has an architecture for managing code called helix. 
-[Show picture]
+Sitecore has an architecture for managing code called helix.
 
-I will show you the naming conventions we used for the project and how it organically organizes our code.
+The Helix architecture separates our code into 3 layers
+- Project
+- Feature
+- Foundation
+
 
 ## Identifying your project's structure
 Our client wants us to implement web component in which a user can sign up for a marketing list and receive regular emails.
 These are the requirements:
-- User needs to enter an email address
-- The email address and other pertinent data (like source) is recorded, packaged, and validated
-- The data packet is sent to an Email Marketing Server via API for future usage
+- User needs to enter an email address [UI, html]
+- The email address and other pertinent data (like source) is recorded, packaged, and validated [controller, models]
+- The data packet is sent to an Email Marketing Server via API for future usage [data context, api calls]
 
 ## Creating our project
 The Helix architecture separates our code into 3 layers:
@@ -231,6 +264,32 @@ The equivalent to the business layer
 ### Project Layer [Hidden from audience]
 This layer contains files that are specific to the project. Most of the times it is CSS, styles, and templates
 
+# Terse Code, Verbose Code, and Drawing the line
+As we touched on in the naming discussion, we spend a lot of time reading code. Furthermore, we made the argument that in many cases using more descriptive
+& informative names is a great way to guarantee clearer and, dare I say, _better_ code. So is more always more? Are there times when perhaps _less_ is more?
+Enter, terseness:
+
+<script src="https://gist.github.com/prangel-code/77e33ee3df369a3eaf28a749c3b81f85.js"></script>
+
+## What is "terse" code?
+
+	__Terse:__ *Using minimal ~~words~~ syntax, devoid of superfluity.*
+
+Many examples of terse code affirm the perception that it is anti-readable code. And while readability should always be high on any developer's priority list,
+there is an argument to be made that sometimes less readable code is preferred over verbose code.
+
+Before moving on, let's clarify what terse code is *NOT*:
+- Writing single letter, abbreviated, or encoded variable names.
+- Horribly abusing white space in a meaningless attempt to minimize lines of code.
+- Indiscriminately chaining sequences of complicated syntax because "it compiles" and does what it's supposed to.
+
+Instead, let's consider terse code to be code that takes advantages of higher level language features to abstract common logical patterns, resulting in less syntax
+and less code. An example we have likely all seen is the ternary operator:
+
+<script src="https://gist.github.com/prangel-code/9c4163ea3eaa5daf5e1552dcc06bda26.js"></script>
+
+Let's kick it up a notch:
+
 
 
 
@@ -254,7 +313,7 @@ The Key is to limit your test to really just test one thing at a time.
 The following is an example of what NOT to do:
 [BadDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs)
 
-<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
+<script src="https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs"></script>
 
 All the functionality is stuck in one function. If an error occurs, there will be no way to know which part failed.
 
@@ -264,7 +323,7 @@ In addition, the inclusion of the ``` SearchRequest ``` Object helps with readab
 
 [BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs)
 
-<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
+<script src="https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs"></script>
 
 ### Include fail scenarios
 An important point to always keep in mind is to have a way to know whether your function really executed as intended. It can be as simple as returning an error code.
@@ -308,38 +367,81 @@ public ConnStatus Connect(string connStr)
 With the expanded code above, we will not only be able to know whether the connection was successful, but we can also know what caused the error if one were to show up.
 
 ### Just because it passes, it does not mean it works
-Let's play a game. Let's say you have code that displays the following prompt:
+We tend to seek information that re-inforces our current belief.
+If during our validation we make an assumption, we look for ways to confirm that it is true.
+We tend to avoid tests that will make our assumption invalid
 
-Here is a sequence of numbers. What is the next correct number?
-- 2
-- 4
-- 8 
-- ??
 
-Which of the following numbers will pass the test?
-- 1
-- 16
-- 9
-- 10
+When writing test code, we need to need to include tests that will invalidate our assumption.
+Let's take a look at ```BetterDBSearch``` class
 
-*Count hands*
-The correct answer is 16, 9 and 10, because the algorithm only tests whether the input number is greater than the previous (8).
-So logically you pick 16, and maybe 1 to "test" your hypothesis. 
-But few will pick the remaining because we tend to seek information that re-inforces our current belief.
-Thought process:
-1. I assume the pattern is: previous number x 2
-2. I pick 16, and program returns true
-3. Because I guessed correctly, I assume that my understanding of the program is correct
-4. Because I believe to be correct, I don't try again with numbers I "know" will fail (9, 10)
-This is confirmation bias.
+[TestSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/src/EasyToTestCode_UnitTest/TestSearch.cs)
 
-When writing test code, we need to be aware of confirmation bias and guard against it. Let's write a test for our ```BetterDBSearch``` class
-[TestSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/TestSearch.cs)
-
-<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
-
-The top function only checks if an item was returned from the search. That means that as long as the search function returns something we will pass.
+The top function only checks if an item was returned from the search. 
+That means that as long as the search function returns something we will pass.
 This is not really testing our search capabilities properly, we are falling for our confirmation bias.
 The second function on the other hand makes sure that the item retrieved is in fact the one that we intended, truly putting our search function to the test.
 
-How to guard against confirmation bias? It is tricky, and not a straight answer. Just by realizing that we all have inherent bias in us we can try to avoid it before it comes back to haunt us.
+## Enforcing C# Style Guides With StyleCop
+
+*INTRO* 
+
+__SCOTT TODO__ -- Edit and Complete Intro
+
+The creators of StyleCop highlight the three main principles when developing StyleCop rules:
+	
+1. What are most teams doing already?
+2. Which option is the most readable (highly subjective)?
+3. Which option will be the easiest to maintain over time?
+
+
+ As explained in depth in other areas of this document, it is important for developers to be explicit with their coding decisions as to improve key areas such as maintainability & readability. Using StyleCop allows a team to stay consistent with their styling which adds another layer of cohesiveness within the team dynamic. 
+
+
+
+### Installing StyleCop
+The easiest way to install the tool is by using Visual Studio's Extension and Updates dialog. Navigate to the Online section and search for StyleCop.
+
+*_SCREENSHOT HERE!_* (How do I add a screenshot to the markdown?)
+
+### Using StyleCop
+
+Once you have installed StyleCop you will be able run it on the entire solution or any specific project. If the solution is large, it is advised to run for individual projects. This is where the fun begins!
+
+#### Accessing StyleCop Settings
+StyleCop settings are maintained at a project level. To access the settings dialog, right-click on a project and choose "StyleCop Settings" from the menu.
+
+*__Screenshot of dialog__*
+
+Walkthrough the settings dialog in 30sec - 1 mintute. Should not spend a ton of time here. Hit the highlights: Rules Organization, Errors vs. Warnings, Total Number of Violations, & Build Integration
+
+__Q: Why would we want different rules for different projects?__
+
+A: Your team goals for maintainability and readibility may be different based on the project. For example, maybe for your web application code the team wants to be strict on variable naming, spacing, and readability so that code fixes can be implemented quickly without spending hours searching through a bundle of ternary statements or nested method calls. Whereas with a library-like project (i.e. repository), the rules could be strict on documentation (e.g. thorough summaries for all methods) and maintainability (e.g. debug asserts must provide message text.)
+
+
+
+#### Manually Running StyleCop
+StyleCop can be run at the project or solution level. If ran at the solution level, it will enforce the project-specific rules that have been configured. To run StyleCop, right-click the project or solution and choose "Run StyleCop". This could take a bit if the project or solution is large. 
+
+Once Stylecop has finished running, you will see the violations in the error-list. Each violation description will start with a rule number, SAXXXX. Sometimes the rule description is not clear on how to fix the problem exactly. In that case, this site has been useful:  http://stylecop.soyuz5.com/StyleCop%20Rules.html
+
+### Examples
+Need to determine how in depth we'd like to go on these examples.
+
+Full StyleCop run on Infrastructure Project (EB) turned up __19k+__ violations. Breakdown of violations:
+
+* Documentation - 5248
+* Readability - 4719
+	* "this" prefix
+* Layout - 3082
+	* Two-line if-else statements
+* Ordering - 3711
+	* Using directives outside of namespace
+* Spacing - 1659
+	* Space following a keyword
+* Naming - 1048
+	* Underscores
+	* Hungarian Notation (false-positives)
+	* "cda_" beginnings
+* Maintainability - 176
