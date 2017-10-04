@@ -117,10 +117,33 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	<script src="https://gist.github.com/ChuckkNorris/a465471971e51200930b5183a698167f.js"></script>
 4. When to use different scopes
     1. Transient - New instance of class each time
+	    
+		If you're not sure what to use, use a transient to ensure that each class has its own clean instance of a particular dependency
+
     2. Scoped - New instance that lasts for the entirety of a request
-    3. Singleton - Single instance available for entire application, aka multiple request threads will be using the same instance
 
+	    Say that you've designed your application to batch save changes to the DbContext made by multiple services. With a scoped dependency, the same instance is used
+		once per request, right before the request ends so that the same context service accesses the same context for the duration , you might scope your context to be Transient
 
+		```
+		// Startup.cs
+		// Configure DbContext as scoped dependency
+		services.AddScoped<MyDbContext>();
+
+		// MovieController.cs
+		// Save the movie
+		movieService.SaveMovie(newMovie);
+		userService.UpdateUserMoviePreferences(userId, newMovie);
+		// Commits both changes in single request to database
+		await this._context.SaveChangesAsync();
+		```
+
+    3. Singleton - Single instance available for entire application aka multiple request threads will be using the same instance. 
+	
+	    Use this sparingly, but one reason to use singletons might be logging.
+	    Say you have a single file that you log all exceptions to on the server. With a singleton scoped service, the exact same instance of your logger will be used for writing exceptions from all requests; This enables you to more easily build a thread-safe file writer and ensure that two different instances aren't trying to write to the same file.
+
+		
 # What's in a name? Naming stuff is hard!
 
 ** SubTopics **
