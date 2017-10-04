@@ -2,15 +2,29 @@
 These tips and tricks are designed to help you write cleaner code, less prone to errors
 
 ## Exception Handling
+
 1. __Throw exceptions when inputs are invalid__
     
     You can quickly add null checks by pressing `CTRL`+`.` and selecting __Add null check__. This will enable you to quickly locate any argument specific errors
+	
+	[UserService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/UserService.cs)
+
     <script src="https://gist.github.com/ChuckkNorris/3f38ffbf8954fc88f8971032dceabcc5.js"></script>
+
 2. If implemented correctly, __you can leverage exceptions to quickly return user-friendly application error messages__
     
 	For example, in a Web API, you can create a middleware which catches all exceptions and returns a friendly error messages to inform the user about exactly what went wrong while avoiding the need to implement a custom API response
+
+    [ErrorHandlingMiddlware.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Errors/ErrorHandlingMiddlware.cs)
+
 	<script src="https://gist.github.com/ChuckkNorris/63cec141e0ed06540f1a11030c73d3f3.js"></script>
 
+	Assuming that the email is expected to be validated by the client application, the request with user-friendly error and request specific error are returned
+	![User Friendly Error](https://image.prntscr.com/image/sH3UmSr7RK_IkyQKHtxTQg.png)
+
+	Here's a request with an invalid username or password but a correctly formatted email
+	![Incorrect Password](https://image.prntscr.com/image/sQ4SKUvdTIqlXNA8RkY--A.png)
+	
 ## Handling Null
 
 1. __Plan for null__
@@ -18,14 +32,32 @@ These tips and tricks are designed to help you write cleaner code, less prone to
     In general, if a value can be null, expect it to be. This will minimize potential null reference exceptions
     For instance, say you have a list of movies and actors which could potentially have null values, by using the *null conditional operator* and the *null coalescing operator* which will check to make sure the value isn't null before trying to access a child property or execute a chained function. Since this change alters the expression's result to be `Nullable<bool>` instead of `bool`, we can use the `??` to fallback to returning false if a value is null.
     Consider designing types that expose collection properties to leverage the "Null Object" design pattern (see Collections section)
+
+	For example, say you're searching on a collection of Movies which could contain null values:
+
+	[MovieService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/MovieService.cs)
+
+	<script src="https://gist.github.com/ChuckkNorris/251330525d59cda7468cb4fa95bcd9a2.js"></script>
+    
+	To ensure that you never throw null exceptions, expect that every value can be null and handle it appropriately
+
+	[MovieService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/MovieService.cs)
+
 	<script src="https://gist.github.com/ChuckkNorris/fc22947a9a75e9c5c37af1ee722f3521.js"></script>
     
 2. __Return null when it makes sense__ such as when an entity could not be found
+	
+	[UserService.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Entities/UserService.cs)
+
     <script src="https://gist.github.com/ChuckkNorris/aaa8c4ea3451f2e8cb0a90df965b3bed.js"></script>
     
-3. __Avoid passing null values as arguments__
+3. __Avoid passing null values as arguments__, but expect that arguments might be null and handle them appropriately
     
-    If you want default logic, use optional arguments instead
+	For example, we make sure the email address isn't null or empty before instantiating the Regular Expression so that it doesn't throw a Null Reference exception and it also saves a few cycles performance-wise
+
+	[Utilities.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Utilities.cs)
+    <script src="https://gist.github.com/ChuckkNorris/17a7b2a6f74a73e407cea23a584b6cbc.js"></script>
+    
 
 ## Method Results
 
@@ -38,6 +70,9 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 2. __Define the variable to return at the top of the method__
     
     This makes it easy for other developers to quickly track where the return value is being modified
+
+	[Utilities.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Utilities.cs)
+    <script src="https://gist.github.com/ChuckkNorris/17a7b2a6f74a73e407cea23a584b6cbc.js"></script>
 
 3. __Establish a convention for default return values__
     
@@ -79,18 +114,50 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 ## Dependency Injection Tips
 
 1. __Use Reflection to add services to the IOC container__
+
     For larger applications, manually adding services to the container can become tedious, and violates the "Open/Closed" principle. Instead, define a "marker" interface, and add all classes that implement it to the container
+
+    [Startup.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Startup.cs)
+
     <script src="https://gist.github.com/ChuckkNorris/b40f4ce134721c25024cb9364088ac63.js"></script>
+
 2. As a rule of thumb, __limit constructor injected dependencies to 6 or less__
+
 	If you find yourself needing more than 6, perhaps it's time for a refactoring - your service/type may have too much responsibility and violates the "Single-Responsibility" Principle (SRP)
-3. To avoid circular dependencies, __try to avoid injecting services into other services__
+
+3. To prevent circular dependencies, __don't inject services into other services__
+
 	<script src="https://gist.github.com/ChuckkNorris/a465471971e51200930b5183a698167f.js"></script>
+
 4. When to use different scopes
     1. Transient - New instance of class each time
+	    
+		If you're not sure what to use, use a transient to ensure that each class has its own clean instance of a particular dependency
+
     2. Scoped - New instance that lasts for the entirety of a request
-    3. Singleton - Single instance available for entire application, aka multiple request threads will be using the same instance
 
+	    Say that you've designed your application to batch save changes to the DbContext made by multiple services. With a scoped dependency, the same instance is used
+		once per request, right before the request ends so that the same context service accesses the same context for the duration , you might scope your context to be Transient
 
+		```
+		// Startup.cs
+		// Configure DbContext as scoped dependency
+		services.AddScoped<MyDbContext>();
+
+		// MovieController.cs
+		// Save the movie
+		movieService.SaveMovie(newMovie);
+		userService.UpdateUserMoviePreferences(userId, newMovie);
+		// Commits both changes in single request to database
+		await this._context.SaveChangesAsync();
+		```
+
+    3. Singleton - Single instance available for entire application aka multiple request threads will be using the same instance. 
+	
+	    Use this sparingly, but one reason to use singletons might be logging.
+	    Say you have a single file that you log all exceptions to on the server. With a singleton scoped service, the exact same instance of your logger will be used for writing exceptions from all requests; This enables you to more easily build a thread-safe file writer and ensure that two different instances aren't trying to write to the same file.
+
+		
 # What's in a name? Naming stuff is hard!
 
 ** SubTopics **
