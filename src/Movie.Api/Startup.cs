@@ -32,20 +32,20 @@ namespace Movie.Api
 
 
         private void InjectServices(IServiceCollection services) {
-            //services.AddTransient<UserService>();
-            //services.AddTransient<MovieService>();
+            // This will eventually become very tedious
+            // services.AddTransient<UserService>();
+            // services.AddTransient<MovieService>();
 
             // Retrieve list of types that implement IService
-            var serviceTypes = GetAllServiceTypes<IService>();
+            var serviceTypes = GetAllImplementationsOfType<IService>();
             
             // Add each service as a transient
-            // Since they 
             foreach (var serviceType in serviceTypes) {
                 services.AddTransient(serviceType);
             }
         }
 
-        private static IEnumerable<Type> GetAllServiceTypes<T>() {
+        private static IEnumerable<Type> GetAllImplementationsOfType<T>() where T: class {
             return AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly => assembly.GetTypes().Where(type =>
                 typeof(T).IsAssignableFrom(type) && !type.IsInterface
             ));
