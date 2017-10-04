@@ -291,3 +291,18 @@ The top function only checks if an item was returned from the search.
 That means that as long as the search function returns something we will pass.
 This is not really testing our search capabilities properly, we are falling for our confirmation bias.
 The second function on the other hand makes sure that the item retrieved is in fact the one that we intended, truly putting our search function to the test.
+
+# Enforcing C# Style Guides With StyleCop
+
+*INTRO* ---TODO
+
+ StyleCop rules tend to encourage whitespace and openness in the code as well as lots of comments and documentation.
+
+## Installing StyleCop
+The easiest way to install the tool is by using Visual Studio's Extension and Updates dialog. Navigate to the Online section and search for StyleCop.
+
+*_SCREENSHOT HERE!_*
+
+## Using StyleCop
+Once you have installed StyleCop you will be able run it on the entire solution or any specific project. If the solution is large, it is advised to run for individual projects. This is where the fun begins!
+
