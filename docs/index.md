@@ -294,15 +294,64 @@ The second function on the other hand makes sure that the item retrieved is in f
 
 # Enforcing C# Style Guides With StyleCop
 
-*INTRO* ---TODO
+*INTRO* 
 
- StyleCop rules tend to encourage whitespace and openness in the code as well as lots of comments and documentation.
+__SCOTT TODO__ -- Edit and Complete Intro
+
+The creators of StyleCop highlight the three main principles when developing StyleCop rules:
+	
+1. What are most teams doing already?
+2. Which option is the most readable (highly subjective)?
+3. Which option will be the easiest to maintain over time?
+
+
+ As explained in depth in other areas of this document, it is important for developers to be explicit with their coding decisions as to improve key areas such as maintainability & readability. Using StyleCop allows a team to stay consistent with their styling which adds another layer of cohesiveness within the team dynamic. 
+
+
 
 ## Installing StyleCop
 The easiest way to install the tool is by using Visual Studio's Extension and Updates dialog. Navigate to the Online section and search for StyleCop.
 
-*_SCREENSHOT HERE!_*
+*_SCREENSHOT HERE!_* (How do I add a screenshot to the markdown?)
 
 ## Using StyleCop
+
 Once you have installed StyleCop you will be able run it on the entire solution or any specific project. If the solution is large, it is advised to run for individual projects. This is where the fun begins!
 
+### Accessing StyleCop Settings
+StyleCop settings are maintained at a project level. To access the settings dialog, right-click on a project and choose "StyleCop Settings" from the menu.
+
+*__Screenshot of dialog__*
+
+Walkthrough the settings dialog in 30sec - 1 mintute. Should not spend a ton of time here. Hit the highlights: Rules Organization, Errors vs. Warnings, Total Number of Violations, & Build Integration
+
+__Q: Why would we want different rules for different projects?__
+
+A: Your team goals for maintainability and readibility may be different based on the project. For example, maybe for your web application code the team wants to be strict on variable naming, spacing, and readability so that code fixes can be implemented quickly without spending hours searching through a bundle of ternary statements or nested method calls. Whereas with a library-like project (i.e. repository), the rules could be strict on documentation (e.g. thorough summaries for all methods) and maintainability (e.g. debug asserts must provide message text.)
+
+
+
+### Manually Running StyleCop
+StyleCop can be run at the project or solution level. If ran at the solution level, it will enforce the project-specific rules that have been configured. To run StyleCop, right-click the project or solution and choose "Run StyleCop". This could take a bit if the project or solution is large. 
+
+Once Stylecop has finished running, you will see the violations in the error-list. Each violation description will start with a rule number, SAXXXX. Sometimes the rule description is not clear on how to fix the problem exactly. In that case, this site has been useful:  http://stylecop.soyuz5.com/StyleCop%20Rules.html
+
+## Examples
+Need to determine how in depth we'd like to go on these examples.
+
+Full StyleCop run on Infrastructure Project (EB) turned up __19k+__ violations. Breakdown of violations:
+
+* Documentation - 5248
+* Readability - 4719
+	* "this" prefix
+* Layout - 3082
+	* Two-line if-else statements
+* Ordering - 3711
+	* Using directives outside of namespace
+* Spacing - 1659
+	* Space following a keyword
+* Naming - 1048
+	* Underscores
+	* Hungarian Notation (false-positives)
+	* "cda_" beginnings
+* Maintainability - 176
