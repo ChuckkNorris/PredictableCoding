@@ -29,6 +29,13 @@ namespace PredictableCoding
             }
 
             app.UseMvc();
+
+            //using (var collections = new Collections.WhichToChoose())
+            //{
+            //    collections.DictionaryLookup();
+            //    collections.ListSearch();
+            //}
+            //System.GC.Collect();
         }
     }
 }
