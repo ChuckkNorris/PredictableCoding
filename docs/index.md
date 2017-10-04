@@ -195,6 +195,8 @@ What we want to think about today is how we can take the "burden" of naming and 
 
 ### The Should's
 - Names should provide intent
+<script src="https://gist.github.com/prangel-code/d6b7fc1d1ffc4281d34925f8a07c6939.js"></script>
+<script src="https://gist.github.com/prangel-code/da6ae51ce555fdcbeed46ee1da49cdac.js"></script>
 - Names should provide appropriate context
 - Names should distinguish between similar ideas
 - Names should be easy to find
