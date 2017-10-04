@@ -95,7 +95,7 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 
 ** SubTopics **
 - 1 Why Naming Matters
-- 2 Multitier Architecture Naming Considerations
+- 2 The Should's, Do's & Don'ts of naming
 - 3 Identifying your project's structure
 - 4 Creating
 
@@ -164,14 +164,13 @@ public List<Cell> GetFlaggedCells()
 ```
 
 ## N-Tier Architecture Naming Considerations
-When developing an application, if it is small enough it can be easy just to simply add all your functions and classes in one file.
 But when applications start growing, it can start becoming a challenge to maintain, reuse, and scale code.
 This is why there are frameworks like the multitier architecture that encourage separating code into modular manageable parts
 
 So what is the big deal and how does naming conventions come into play?
-Because separating your code into modules inherently creates more objects (files) to keep track of, 
-the new challenge comes in keeping track of and understanding what your modules do.
-This is where naming conventions can help us out.
+Separating your code into modules inherently creates more objects (files)
+New challenge comes in keeping track of and understanding what your modules do
+This is where naming conventions can help us out
 
 To illustrate the benefits of adhering to solid naming conventions, I will show you a small demo based on an implementation that we did for one of our clients.
 
@@ -241,7 +240,7 @@ The Key is to limit your test to really just test one thing at a time.
 The following is an example of what NOT to do:
 [BadDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs)
 
-<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
+<script src="https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs"></script>
 
 All the functionality is stuck in one function. If an error occurs, there will be no way to know which part failed.
 
@@ -251,7 +250,7 @@ In addition, the inclusion of the ``` SearchRequest ``` Object helps with readab
 
 [BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs)
 
-<script src="https://gist.github.com/ChuckkNorris/ea72da075116adf3539daa424d4e0052.js"></script>
+<script src="https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs"></script>
 
 ### Include fail scenarios
 An important point to always keep in mind is to have a way to know whether your function really executed as intended. It can be as simple as returning an error code.
