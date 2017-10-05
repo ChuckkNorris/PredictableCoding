@@ -164,15 +164,12 @@ public List<Cell> GetFlaggedCells()
 ```
 
 ## Multi Tier Architecture Naming Considerations
-When applications start growing, it starts becoming challenge to maintain, reuse, and scale code.
-This is why there are frameworks like the multitier architecture that encourage separating code into modular manageable parts
+- Bigger applications = More code
+- Handle more code by splitting it
+- Splitting code means more files
+- Keeping track of what they are not as simple anymore
 
-So what is the big deal and how does naming conventions come into play?
-Separating your code into modules inherently creates more objects (files)
-New challenge comes in keeping track of and understanding what your modules do
-This is where naming conventions can help us out
-
-To illustrate: I will show you a small demo based on an implementation that we did for one of our clients
+To illustrate: I will show you a small demo based off a client
 
 Let me describe the scenario:
 Our client uses the popular CMS platform called Sitecore. 
@@ -185,19 +182,13 @@ The Helix architecture separates our code into 3 layers
 
 
 ## Identifying your project's structure
-Our client wants us to implement web component in which a user can sign up for a marketing list and receive regular emails.
-These are the requirements:
+Client wants web component
+Requirements:
 - User needs to enter an email address [UI, html]
 - The email address and other pertinent data (like source) is recorded, packaged, and validated [controller, models]
 - The data packet is sent to an Email Marketing Server via API for future usage [data context, api calls]
 
 ## Creating our project
-The Helix architecture separates our code into 3 layers:
-- Project
-- Feature
-- Foundation
-
-[Show figure]
 [Start Demo]
 
 
@@ -221,8 +212,6 @@ The equivalent to the business layer
 This layer contains files that are specific to the project. Most of the times it is CSS, styles, and templates
 
 
-
-
 # Making your code easy to test
 ## SubTopics
 - Understand what specific functionality you are going to test
@@ -236,78 +225,51 @@ Let's take the situation when you have code that does the following:
 - Sends a Get request with parameters, receives a response
 - Returns the response in a usable instance of an object
 
-If you try to write a test that will try to do all of the 3 things in one test, you will have a bad time.
-The reason being, if the test fails you don't know if it is because you don't have a connection, your response is not what you expected, or maybe the parameters are wrong.
-The Key is to limit your test to really just test one thing at a time.
-
 The following is an example of what NOT to do:
 [BadDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs)
 
-<script src="https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs"></script>
+<script src="https://gist.github.com/cjc061000/da5ed3daef1fd20aa7d3b492de9c5a6c.js"></script>
 
-All the functionality is stuck in one function. If an error occurs, there will be no way to know which part failed.
+Hard to test if only one function
+If the test fails, you don't know the real reason
+The Key: limit functions to one thing at a time
 
-Here is a better version of the code. The different tasks are split up so that each can be tested independently. 
-This allows us to truly know which step fails or passes. 
-In addition, the inclusion of the ``` SearchRequest ``` Object helps with readability and escalability if at some point the parameters need to change.
+
+Here is a better version of the code 
 
 [BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs)
 
-<script src="https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs"></script>
+<script src="https://gist.github.com/cjc061000/28e46bd5eb6574a352fadb5c4dd71637.js"></script>
+
+Different tasks are split up so that each can be tested independently
+This allows us to truly know which step fails or passes 
+The inclusion of the ``` SearchRequest ``` Object helps with readability/testability
+
 
 ### Include fail scenarios
-An important point to always keep in mind is to have a way to know whether your function really executed as intended. It can be as simple as returning an error code.
-We should get into the habit of avoiding those situations where we swallow, mask, or otherwise ignore errors and continue. Let's take a look at the following code.
+Did your function really executed as intended?
+Avoiding situations where we swallow, mask, or otherwise ignore errors and continue
 
-```csharp
-public void Connect(string connStr) 
-{
-	try
-	{
-		DBConnection.connect(connStr);
-	}
-	catch(Exception){}
-}
-```
-Certainly if there is something wrong with the connection, our code will not error out, and will continue "gracefuly". 
-It might, however, bring trouble down the line as we have no way to check whether a successful call happened. The following is a better example
+<script src="https://gist.github.com/cjc061000/fcd9aa1cc675b92154743f3b0919e7c7.js"></script>
 
-```csharp
-public class ConnStatus
-{
-	public bool isValid {get;set;}
-	public string errMsg {get;set;}
-}
+Code will not error out, and will continue "gracefuly"
+It WILL bring trouble down the line, because "My code does not break"
 
-public ConnStatus Connect(string connStr)
-{
-	var ctx = new ConnStatus();
-	try
-	{
-		DBConnection.connect(connStr);
-		ctx.isValid = true;
-	}
-	catch(Exception e)
-	{
-		ctx.isValid = false;
-		ctx.errMsg = e.Message;
-	}
-}
-```
-With the expanded code above, we will not only be able to know whether the connection was successful, but we can also know what caused the error if one were to show up.
+Same code but better
+<script src="https://gist.github.com/cjc061000/5135f7e44d14dab1e026e498e3e743a5.js"></script>
+
+We can know if the connection was successful 
+but we can also know what caused the error (if any)
 
 ### Just because it passes, it does not mean it works
-We tend to seek information that re-inforces our current belief.
-If during our validation we make an assumption, we look for ways to confirm that it is true.
-We tend to avoid tests that will make our assumption invalid
-
+We tend to seek information that re-inforces our current belief
+We make an assumption, we look for ways to confirm that it is true
+We tend to avoid situations (ie tests) that will make our assumption invalid
 
 When writing test code, we need to need to include tests that will invalidate our assumption.
-Let's take a look at ```BetterDBSearch``` class
 
-[TestSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/src/EasyToTestCode_UnitTest/TestSearch.cs)
+<script src="https://gist.github.com/cjc061000/7bbe07ef40668f8a8fabb3a53e72990f.js"></script>
 
-The top function only checks if an item was returned from the search. 
-That means that as long as the search function returns something we will pass.
-This is not really testing our search capabilities properly, we are falling for our confirmation bias.
-The second function on the other hand makes sure that the item retrieved is in fact the one that we intended, truly putting our search function to the test.
+Top function only checks if an item was returned
+As long as search function returns something, test passes (bad)
+The second function ensures the item retrieved is the intended one (better)
