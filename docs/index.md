@@ -195,8 +195,6 @@ What we want to think about today is how we can take the "burden" of naming and 
 
 ### The Should's
 - Names should provide intent
-<script src="https://gist.github.com/prangel-code/d6b7fc1d1ffc4281d34925f8a07c6939.js"></script>
-<script src="https://gist.github.com/prangel-code/da6ae51ce555fdcbeed46ee1da49cdac.js"></script>
 - Names should provide appropriate context
 - Names should distinguish between similar ideas
 - Names should be easy to find
@@ -204,13 +202,13 @@ What we want to think about today is how we can take the "burden" of naming and 
 ### The Do's
 - Do follow relevant standards (industry, teamwide, domain "ubiquitous language", etc.)
 - Do rename variables from others' code if you have a better name in mind
-- Do use automation tools (IDE's, scripts, etc.) to make naming & renaming easier (e.g. use the "Rename" refactoring in Visual Studio instead of manual text changing)
+- Do use automation tools (IDE's, scripts, etc.) to make naming & renaming easier
 - Do have teamwide discussions about naming edge cases & standards
 
 ### The Don'ts
 - Don't underestimate the value of good names
-- Don't use abbreviated or shortened names to save time (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
-- Don't use extraneous & redundant information in names
+- Don't use abbreviated or shortened names to save time 
+- Don't use extraneous & redundant information in names (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
 - Don't rely on comments & documentation to do a name's job
     <script src="https://gist.github.com/prangel-code/362405d336027053fa839e73044460b8.js"></script>
 
