@@ -1,5 +1,149 @@
 # Predictable Coding
-These tips and tricks are designed to help you write cleaner code, less prone to errors
+These tips and tricks are designed to help you write cleaner, more maintainable code, and less prone to errors.
+
+		
+## What's in a name? Naming stuff is hard!
+
+### Agenda
+1. Why Naming Matters
+2. The Should's, Do's & Don'ts of naming
+3. Multi Tier Architecture Naming Considerations
+4. Demo
+
+
+### Why naming matters
+Despite our best intentions, we spend far more time _reading_ others' code than we do writing our own (some have shown the ratio to be as high as 10:1). In light of
+this fact, writing code that can be easily read is an extremely valuable skill.
+
+Can you think of anything in software that doesn't have a name?  Likely not; names are at the root of almost all communication (to the point of being burdensome). 
+What we want to think about today is how we can take the "burden" of naming and turn it into an advantage.
+
+### The Should's, Do's & Don'ts of naming
+
+#### The Should's
+- Names should provide intent
+- Names should provide appropriate context
+- Names should distinguish between similar ideas
+- Names should be easy to find
+
+#### The Do's
+- Do follow relevant standards (industry, teamwide, domain "ubiquitous language", etc.)
+- Do rename variables from others' code if you have a better name in mind
+- Do use automation tools (IDE's, scripts, etc.) to make naming & renaming easier
+- Do have teamwide discussions about naming edge cases & standards
+
+#### The Don'ts
+- Don't underestimate the value of good names
+- Don't use abbreviated or shortened names to save time 
+- Don't use extraneous & redundant information in names (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
+- Don't rely on comments & documentation to do a name's job
+    <script src="https://gist.github.com/prangel-code/362405d336027053fa839e73044460b8.js"></script>
+
+### Multi Tier Architecture Naming Considerations
+When applications start growing, it starts becoming challenge to maintain, reuse, and scale code.
+This is why there are frameworks like the multitier architecture that encourage separating code into modular manageable parts
+
+So what is the big deal and how does naming conventions come into play?
+Separating your code into modules inherently creates more objects (files)
+New challenge comes in keeping track of and understanding what your modules do
+This is where naming conventions can help us out
+
+To illustrate: I will show you a small demo based on an implementation that we did for one of our clients
+
+Let me describe the scenario:
+Our client uses the popular CMS platform called Sitecore. 
+Sitecore has an architecture for managing code called helix.
+
+The Helix architecture separates our code into 3 layers
+- Project
+- Feature
+- Foundation
+
+
+#### Identifying your project's structure
+Our client wants us to implement web component in which a user can sign up for a marketing list and receive regular emails.
+These are the requirements:
+- User needs to enter an email address [UI, html]
+- The email address and other pertinent data (like source) is recorded, packaged, and validated [controller, models]
+- The data packet is sent to an Email Marketing Server via API for future usage [data context, api calls]
+
+#### Creating our project
+The Helix architecture separates our code into 3 layers:
+- Project
+- Feature
+- Foundation
+
+[Show figure]
+[Start Demo]
+
+
+##### [Code is found under NamingIsHard_Code project]
+
+#### Foundation Layer [Hidden from audience]
+The lowest module. Usually Libraries like JQuery or Database Context.
+- Create Project
+- Create ApiCall class(with Request Obj)
+- Create Request Object
+- Create Response Obj
+
+#### Feature Layer [Hidden from audience]
+The equivalent to the business layer 
+- Create Iterface IEmailSignup
+- Implement Interface EmailSignup
+- Instantiate Package Object
+- Create Validation Object
+
+
+#### Project Layer [Hidden from audience]
+This layer contains files that are specific to the project. Most of the times it is CSS, styles, and templates
+
+---------------------------
+
+## Terse Code, Verbose Code, and Drawing the line
+As we touched on in the naming discussion, we spend a lot of time reading code. Furthermore, we made the argument that in many cases using more descriptive
+& informative names is a great way to guarantee clearer and, dare I say, _better_ code. So is more always more? Are there times when perhaps _less_ is more?
+Enter, terseness:
+
+<script src="https://gist.github.com/prangel-code/77e33ee3df369a3eaf28a749c3b81f85.js"></script>
+
+### What is "terse" code?
+
+__Terse:__ *Using minimal ~~words~~ syntax, devoid of superfluity.*
+
+Many examples of terse code affirm the perception that it is anti-readable code. And while readability should always be high on any developer's priority list,
+there is an argument to be made that sometimes less readable code is preferred over verbose code.
+
+Before moving on, let's clarify what terse code is **NOT**:
+- Writing single letter, abbreviated, or encoded variable names.
+- Horribly abusing white space in a meaningless attempt to minimize lines of code.
+- Indiscriminately chaining sequences of complicated syntax because "it compiles" and does what it's supposed to.
+
+Instead, let's consider terse code to be code that takes advantages of higher level language features to abstract common logical patterns, resulting in less syntax
+and less code. An example we have likely all seen is the ternary operator:
+
+<script src="https://gist.github.com/prangel-code/9c4163ea3eaa5daf5e1552dcc06bda26.js"></script>
+
+Without falling down the rabbit hole of pros and cons of minimal syntax like the ternary operator, let's agree on a few things:
+- The ternary operator takes less space to acheive the same logical result
+- Whether the ternary operator is more or less readable than a traditional if/else statement is _purely_ opinion and preference
+- There are ways we can use ternary operators that we can not use if/else
+
+So where is the balance? Let's look at another example.
+
+[DEMO CODE - add reference]
+
+### Drawing the line ... or at least trying
+When trying to understand other perspectives, a great place to start is intent. What is the intent behind that perspective? For terse code it is clear that language 
+features like ternary & null coalescing operators intend to package up common logical operations into compact and "intuitive" (up for debate) syntax. In other words,
+if you're a fan of using modularization to reduce code duplication & alleviate code maintenance then there's an argument to be made that you should also be a fan
+of terse code.
+
+And yet, any non-terse coders are probably asking themselves "Yeah, but where do we draw the line?". Which sounds like a great opportunity for another bulleted list:
+- Avoid accepting the excuse "I don't know what that syntax does."
+- Communicate about team standards & best practices
+- Readability is king, terse code should still be clean code
+
+---------------------------
 
 ## Exception Handling
 
@@ -25,7 +169,7 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	Here's a request with an invalid username or password but a correctly formatted email
 	![Incorrect Password](https://image.prntscr.com/image/sQ4SKUvdTIqlXNA8RkY--A.png)
 	
-## Handling Null
+### Handling Null
 
 1. __Plan for null__
     
@@ -59,7 +203,7 @@ These tips and tricks are designed to help you write cleaner code, less prone to
     <script src="https://gist.github.com/ChuckkNorris/17a7b2a6f74a73e407cea23a584b6cbc.js"></script>
     
 
-## Method Results
+### Method Results
 
 1. __Use informative method names__
     Method names should start with a *verb* followed by details explaining exactly what the method does
@@ -67,19 +211,20 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	- `GetUserByEmail(string email);`
 	- `GetUserIfCredentialsAreValid(string username, string password);`
 
-2. __Define the variable to return at the top of the method__
+2. __SUGGESTION: Define the variable to return at the top of the method__
     
-    This makes it easy for other developers to quickly track where the return value is being modified
+    This makes it easy for other developers to quickly track where the return value is being modified.  But beware of complexity within methods - if you must declare such variable at top, consider whether the method is doing too much and should be refactored.
 
 	[Utilities.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/Movie.Api/Utilities.cs)
     <script src="https://gist.github.com/ChuckkNorris/17a7b2a6f74a73e407cea23a584b6cbc.js"></script>
 
 3. __Establish a convention for default return values__
     
-    - If returning a collection, return an empty collection instead of null if no results are found
+    - If returning a collection, return an empty collection instead of null if no results are found (more about this below)
     - If returning a single object that's not found, returning null is often acceptable
     - Or, employ the Null-Object pattern as a common practice in your project
 
+---------------------------
 
 ## Collections
 
@@ -128,7 +273,9 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 
 	[Fluent vs Query Syntax Code Sample](https://github.com/ChuckkNorris/PredictableCoding/blob/39240c66fa19d53519bcf48bc6a4e1dfd81bb5bc/src/PredictableCoding/Collections/LinqTips.cs#L26-L40)
 
-## Dependency Injection Tips
+---------------------------
+
+## Dependency Injection Tips in .NET Core (concepts apply to other DI containers)
 
 1. __Use Reflection to add services to the IOC container__
 
@@ -156,7 +303,7 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	    Say that you've designed your application to batch save changes to the DbContext made by multiple services. With a scoped dependency, the same instance is used
 		once per request, right before the request ends so that the same context service accesses the same context for the duration , you might scope your context to be Transient
 
-		```
+		```csharp
 		// Startup.cs
 		// Configure DbContext as scoped dependency
 		services.AddScoped<MyDbContext>();
@@ -174,146 +321,11 @@ These tips and tricks are designed to help you write cleaner code, less prone to
 	    Use this sparingly, but one reason to use singletons might be logging.
 	    Say you have a single file that you log all exceptions to on the server. With a singleton scoped service, the exact same instance of your logger will be used for writing exceptions from all requests; This enables you to more easily build a thread-safe file writer and ensure that two different instances aren't trying to write to the same file.
 
-		
-# What's in a name? Naming stuff is hard!
+---------------------------
 
-** SubTopics **
-- 1 Why Naming Matters
-- 2 The Should's, Do's & Don'ts of naming
-- 3 Multi Tier Architecture Naming Considerations
-- 4 Demo
+## Making your code easy to test
 
-
-## Why naming matters
-Despite our best intentions, we spend far more time _reading_ others' code than we do writing our own (some have shown the ratio to be as high as 10:1). In light of
-this fact, writing code that can be easily read is an extremely valuable skill.
-
-Can you think of anything in software that doesn't have a name?  Likely not; names are at the root of almost all communication (to the point of being burdensome). 
-What we want to think about today is how we can take the "burden" of naming and turn it into an advantage.
-
-## The Should's, Do's & Don'ts of naming
-
-### The Should's
-- Names should provide intent
-- Names should provide appropriate context
-- Names should distinguish between similar ideas
-- Names should be easy to find
-
-### The Do's
-- Do follow relevant standards (industry, teamwide, domain "ubiquitous language", etc.)
-- Do rename variables from others' code if you have a better name in mind
-- Do use automation tools (IDE's, scripts, etc.) to make naming & renaming easier
-- Do have teamwide discussions about naming edge cases & standards
-
-### The Don'ts
-- Don't underestimate the value of good names
-- Don't use abbreviated or shortened names to save time 
-- Don't use extraneous & redundant information in names (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
-- Don't rely on comments & documentation to do a name's job
-    <script src="https://gist.github.com/prangel-code/362405d336027053fa839e73044460b8.js"></script>
-
-## Multi Tier Architecture Naming Considerations
-When applications start growing, it starts becoming challenge to maintain, reuse, and scale code.
-This is why there are frameworks like the multitier architecture that encourage separating code into modular manageable parts
-
-So what is the big deal and how does naming conventions come into play?
-Separating your code into modules inherently creates more objects (files)
-New challenge comes in keeping track of and understanding what your modules do
-This is where naming conventions can help us out
-
-To illustrate: I will show you a small demo based on an implementation that we did for one of our clients
-
-Let me describe the scenario:
-Our client uses the popular CMS platform called Sitecore. 
-Sitecore has an architecture for managing code called helix.
-
-The Helix architecture separates our code into 3 layers
-- Project
-- Feature
-- Foundation
-
-
-## Identifying your project's structure
-Our client wants us to implement web component in which a user can sign up for a marketing list and receive regular emails.
-These are the requirements:
-- User needs to enter an email address [UI, html]
-- The email address and other pertinent data (like source) is recorded, packaged, and validated [controller, models]
-- The data packet is sent to an Email Marketing Server via API for future usage [data context, api calls]
-
-## Creating our project
-The Helix architecture separates our code into 3 layers:
-- Project
-- Feature
-- Foundation
-
-[Show figure]
-[Start Demo]
-
-
-### [Code is found under NamingIsHard_Code project]
-### Foundation Layer [Hidden from audience]
-The lowest module. Usually Libraries like JQuery or Database Context.
-- Create Project
-- Create ApiCall class(with Request Obj)
-- Create Request Object
-- Create Response Obj
-
-### Feature Layer [Hidden from audience]
-The equivalent to the business layer 
-- Create Iterface IEmailSignup
-- Implement Interface EmailSignup
-- Instantiate Package Object
-- Create Validation Object
-
-
-### Project Layer [Hidden from audience]
-This layer contains files that are specific to the project. Most of the times it is CSS, styles, and templates
-
-# Terse Code, Verbose Code, and Drawing the line
-As we touched on in the naming discussion, we spend a lot of time reading code. Furthermore, we made the argument that in many cases using more descriptive
-& informative names is a great way to guarantee clearer and, dare I say, _better_ code. So is more always more? Are there times when perhaps _less_ is more?
-Enter, terseness:
-
-<script src="https://gist.github.com/prangel-code/77e33ee3df369a3eaf28a749c3b81f85.js"></script>
-
-## What is "terse" code?
-
-	__Terse:__ *Using minimal ~~words~~ syntax, devoid of superfluity.*
-
-Many examples of terse code affirm the perception that it is anti-readable code. And while readability should always be high on any developer's priority list,
-there is an argument to be made that sometimes less readable code is preferred over verbose code.
-
-Before moving on, let's clarify what terse code is *NOT*:
-- Writing single letter, abbreviated, or encoded variable names.
-- Horribly abusing white space in a meaningless attempt to minimize lines of code.
-- Indiscriminately chaining sequences of complicated syntax because "it compiles" and does what it's supposed to.
-
-Instead, let's consider terse code to be code that takes advantages of higher level language features to abstract common logical patterns, resulting in less syntax
-and less code. An example we have likely all seen is the ternary operator:
-
-<script src="https://gist.github.com/prangel-code/9c4163ea3eaa5daf5e1552dcc06bda26.js"></script>
-
-Without falling down the rabbit hole of pros and cons of minimal syntax like the ternary operator, let's agree on a few things:
-- The ternary operator takes less space to acheive the same logical result
-- Whether the ternary operator is more or less readable than a traditional if/else statement is _purely_ opinion and preference
-- There are ways we can use ternary operators that we can not use if/else
-
-So where is the balance? Let's look at another example.
-
-## Drawing the line ... or at least trying
-When trying to understand other perspectives, a great place to start is intent. What is the intent behind that perspective? For terse code it is clear that language 
-features like ternary & null coalescing operators intend to package up common logical operations into compact and "intuitive" (up for debate) syntax. In other words,
-if you're a fan of using modularization to reduce code duplication & alleviate code maintenance then there's an argument to be made that you should also be a fan
-of terse code.
-
-And yet, any non-terse coders are probably asking themselves "Yeah, but where do we draw the line?". Which sounds like a great opportunity for another bulleted list:
-- Avoid accepting the excuse "I don't know what that syntax does."
-- Communicate about team standards & best practices
-- Readability is king, terse code should still be clean code
-
-
-# Making your code easy to test
-## SubTopics
+### Agenda
 - Understand what specific functionality you are going to test
 - Understand most common scenarios and situations
 - Include Fail Scenarios (Nulls, etc)
