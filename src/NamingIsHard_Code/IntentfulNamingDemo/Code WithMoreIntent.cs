@@ -1,8 +1,7 @@
-﻿using System;
+﻿using NamingIsHard_Code.IntentfulNamingDemo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Web.Http;
 
 namespace NamingIsHard_Code.Naming_Intent
 {
@@ -92,7 +91,7 @@ namespace NamingIsHard_Code.Naming_Intent
     internal class HttpUtility
     {
 
-        internal int GetAuthenticatedUserId(HttpRequestMessage request)
+        internal int GetAuthenticatedUserId(object request)
         {
             throw new NotImplementedException();
         }
