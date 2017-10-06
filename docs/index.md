@@ -180,7 +180,7 @@ Without falling down the rabbit hole of pros and cons of minimal syntax like the
 
 So where is the balance? Let's look at another example.
 
-[DEMO CODE - add reference]
+[TerseTest.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/b289c272e7a494beea5a53f30439260da710319e/src/UnitTestProject1/CounterTest.cs#L1)
 
 ### Drawing the line ... or at least trying
 When trying to understand other perspectives, a great place to start is intent. What is the intent behind that perspective? For terse code it is clear that language 
