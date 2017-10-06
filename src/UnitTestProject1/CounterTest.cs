@@ -26,9 +26,9 @@ namespace TerseTests
             #endregion
             var counter = new Counter();
 
-            Assert.AreEqual(counter.WithNoValues().Count_Terse, counter.WithNoValues().Count_Interpreted);
-            Assert.AreEqual(counter.WithOneValue(singleValue).Count_Terse, counter.WithOneValue(singleValue).Count_Interpreted);
-            Assert.AreEqual(counter.WithManyValues(manyValues).Count_Terse, counter.WithManyValues(manyValues).Count_Interpreted);
+            Assert.AreEqual(counter.WithNoValues().Count_Terse, counter.WithNoValues().Count_Verbose);
+            Assert.AreEqual(counter.WithOneValue(singleValue).Count_Terse, counter.WithOneValue(singleValue).Count_Verbose);
+            Assert.AreEqual(counter.WithManyValues(manyValues).Count_Terse, counter.WithManyValues(manyValues).Count_Verbose);
         }
     }
 
@@ -39,7 +39,8 @@ namespace TerseTests
        
         public int Count_Terse => _value != null ? 1 : (_values?.Length ?? 0);
 
-        public int Count_Interpreted
+        //Do you know your C# operators? Replicate the logic of Count_Terse in the unimplemented Count_Verbose below. 
+        public int Count_Verbose
         {
             get
             {
@@ -47,7 +48,8 @@ namespace TerseTests
             }
         }
 
-        //public int Count_Interpreted
+        //See the answer here!
+        //public int Count_Verbose
         //{
         //    get
         //    {
