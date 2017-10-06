@@ -12,32 +12,32 @@ These tips and tricks are designed to help you write cleaner, more maintainable 
 
 
 ### Why naming matters
-Despite our best intentions, we spend far more time _reading_ others' code than we do writing our own (some have shown the ratio to be as high as 10:1). In light of
-this fact, writing code that can be easily read is an extremely valuable skill.
+Despite our best efforts, we spend far more time _reading_ others' code than we do writing our own (some have shown the ratio to be as high as 10:1). In light of
+this fact, the skill of writing code that can be easily read and understood is invaludable.
 
 Can you think of anything in software that doesn't have a name?  Likely not; names are at the root of almost all communication (to the point of being burdensome). 
 What we want to think about today is how we can take the "burden" of naming and turn it into an advantage.
 
 ### The Should's, Do's & Don'ts of naming
 
-#### The Should's
-- Names should provide intent
-- Names should provide appropriate context
-- Names should distinguish between similar ideas
-- Names should be easy to find
+#### Names Should...
+- Indicate intent
+- Provide context
+- Distinguish between similar ideas
+- Be easy to find
 
-#### The Do's
-- Do follow relevant standards (industry, teamwide, domain "ubiquitous language", etc.)
-- Do rename variables from others' code if you have a better name in mind
-- Do use automation tools (IDE's, scripts, etc.) to make naming & renaming easier
-- Do have teamwide discussions about naming edge cases & standards
+#### When naming, do...
+- Follow relevant standards (industry, teamwide, domain "ubiquitous language", etc.)
+- Rename variables from others' code if you have a better name in mind
+- Use automation tools (IDE's, scripts, etc.) to make naming & renaming easier
+- Have teamwide discussions about naming edge cases & standards
 
-#### The Don'ts
-- Don't underestimate the value of good names
-- Don't use abbreviated or shortened names to save time 
-- Don't use extraneous & redundant information in names (e.g. avoid Hungarian notation: `strFoo`, `iCounter`, `bFlag` )
-- Don't rely on comments & documentation to do a name's job
+#### When naming, don't...
+- Use abbreviated, shortened, or encoded names
+	<script src="https://gist.github.com/prangel-code/9c6118bd9ce1a3771ff283d442ae56de.js"></script>
+- Rely on comments & documentation to do a name's job
     <script src="https://gist.github.com/prangel-code/362405d336027053fa839e73044460b8.js"></script>
+- Underestimate the value of good names
 
 ## Multi Tier Architecture Naming Considerations
 - Bigger applications = More code
