@@ -406,7 +406,7 @@ StyleCop settings are maintained at a project level. To access the settings dial
 __Q: Why would we want different rules for different projects?__
 
 __A:__ 
-Your team's goals for maintainability and readibility may be different based on the project. For example, maybe for your web application the team wants to be strict on variable naming, spacing, and readability so that code fixes can be implemented quickly without spending hours searching through a bundle of ternary statements or poorly named methods. Whereas, with a library-like project (i.e. repository), the rules could be strict on documentation (e.g. thorough, well documented summaries for all methods) and maintainability (e.g. debug asserts must provide message text.)
+Your team's emphasis on maintainability and readibility may be different based on the project. For example, maybe for your web application the team wants to be strict on variable naming, spacing, and readability so that code fixes can be implemented quickly without spending hours searching through a bundle of ternary operators or poorly named methods. Whereas, with a library-like project (i.e. repository), the rules could be strict on documentation (e.g. thorough, well documented summaries for all methods) and maintainability (e.g. debug asserts must provide message text.)
 
 #### Manually Running StyleCop
 StyleCop can be run at the project or solution level. If ran at the solution level, it will enforce the project-specific rules that have been configured. To run StyleCop, right-click the project or solution and choose "Run StyleCop".
