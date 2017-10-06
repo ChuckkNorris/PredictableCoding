@@ -102,7 +102,6 @@ Let's take the situation when you have code that does the following:
 - Returns the response in a usable instance of an object
 
 The following is an example of what NOT to do:
-[BadDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs)
 
 <script src="https://gist.github.com/cjc061000/da5ed3daef1fd20aa7d3b492de9c5a6c.js"></script>
 
@@ -112,8 +111,6 @@ The Key: limit functions to one thing at a time
 
 
 Here is a better version of the code 
-
-[BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs)
 
 <script src="https://gist.github.com/cjc061000/28e46bd5eb6574a352fadb5c4dd71637.js"></script>
 
@@ -378,62 +375,59 @@ And yet, any non-terse coders are probably asking themselves "Yeah, but where do
 
 ## Enforcing C# Style Guides With StyleCop
 
-*INTRO* 
+StyleCop is a third-party tool that is widely adopted in the .NET community. StyleCop adds configurable styling rules to your project. When these rules are broken, the developer is warned or forced to make updates. 
 
-__SCOTT TODO__ -- Edit and Complete Intro
-
-The creators of StyleCop highlight the three main principles when developing StyleCop rules:
+The three main principles the StyleCop developers followed when creating StyleCop rules:
 	
 1. What are most teams doing already?
 2. Which option is the most readable (highly subjective)?
 3. Which option will be the easiest to maintain over time?
 
+The rules cover concepts such as: documentation, maintainability, spacing, & readability. As mentioned in the rule creation principles, these topics can be highly subjective which is also why the rules are configurable. 
 
- As explained in depth in other areas of this document, it is important for developers to be explicit with their coding decisions as to improve key areas such as maintainability & readability. Using StyleCop allows a team to stay consistent with their styling which adds another layer of cohesiveness within the team dynamic. 
-
-
+As seen in other areas of this document, it is clear why it is important for developers to establish a style guide and stick to it for the entirity of a project. Often times making these key decisions with maintainability & readability in mind can vastly improve the productivity of your team. Using StyleCop can ensure that a team stays consistent with their styling.
 
 ### Installing StyleCop
 The easiest way to install the tool is by using Visual Studio's Extension and Updates dialog. Navigate to the Online section and search for StyleCop.
 
-*_SCREENSHOT HERE!_* (How do I add a screenshot to the markdown?)
+![Install StyleCop](https://image.prntscr.com/image/GSf-_ig_QaCkKnonF0ERSQ.png)
+
+However, there is a nuget package option 
 
 ### Using StyleCop
 
-Once you have installed StyleCop you will be able run it on the entire solution or any specific project. If the solution is large, it is advised to run for individual projects. This is where the fun begins!
+Once you have installed StyleCop you will be able run it on the entire solution or any specific project. If the solution is large, it is advised to run for individual projects.
 
 #### Accessing StyleCop Settings
 StyleCop settings are maintained at a project level. To access the settings dialog, right-click on a project and choose "StyleCop Settings" from the menu.
 
-*__Screenshot of dialog__*
-
-Walkthrough the settings dialog in 30sec - 1 mintute. Should not spend a ton of time here. Hit the highlights: Rules Organization, Errors vs. Warnings, Total Number of Violations, & Build Integration
+![StyleCop Dialog](https://image.prntscr.com/image/_hQZqOXISmiIJNKGbQckMA.png)
 
 __Q: Why would we want different rules for different projects?__
 
-A: Your team goals for maintainability and readibility may be different based on the project. For example, maybe for your web application code the team wants to be strict on variable naming, spacing, and readability so that code fixes can be implemented quickly without spending hours searching through a bundle of ternary statements or nested method calls. Whereas with a library-like project (i.e. repository), the rules could be strict on documentation (e.g. thorough summaries for all methods) and maintainability (e.g. debug asserts must provide message text.)
-
-
+__A:__ 
+Your team's goals for maintainability and readibility may be different based on the project. For example, maybe for your web application the team wants to be strict on variable naming, spacing, and readability so that code fixes can be implemented quickly without spending hours searching through a bundle of ternary statements or poorly named methods. Whereas, with a library-like project (i.e. repository), the rules could be strict on documentation (e.g. thorough, well documented summaries for all methods) and maintainability (e.g. debug asserts must provide message text.)
 
 #### Manually Running StyleCop
-StyleCop can be run at the project or solution level. If ran at the solution level, it will enforce the project-specific rules that have been configured. To run StyleCop, right-click the project or solution and choose "Run StyleCop". This could take a bit if the project or solution is large. 
+StyleCop can be run at the project or solution level. If ran at the solution level, it will enforce the project-specific rules that have been configured. To run StyleCop, right-click the project or solution and choose "Run StyleCop".
 
-Once Stylecop has finished running, you will see the violations in the error-list. Each violation description will start with a rule number, SAXXXX. Sometimes the rule description is not clear on how to fix the problem exactly. In that case, this site has been useful:  http://stylecop.soyuz5.com/StyleCop%20Rules.html
+Once Stylecop has finished running, you will see the violations in the error-list. Each violation description will start with a rule number, SAXXXX. If the rule description is not clear on how to fix the problem, this site can be useful:  
+<a href="http://stylecop.soyuz5.com/StyleCop%20Rules.html">Style Cop Rules Guide</a>
 
 ### Examples
-Need to determine how in depth we'd like to go on these examples.
 
 Full StyleCop run on Infrastructure Project (EB) turned up __19k+__ violations. Breakdown of violations:
 
 * Documentation - 5248
+	* Missing summaries and document headers
 * Readability - 4719
-	* "this" prefix
+	* lacking "this" prefix
 * Layout - 3082
 	* Two-line if-else statements
 * Ordering - 3711
-	* Using directives outside of namespace
+	* "Using" directives outside of namespace
 * Spacing - 1659
-	* Space following a keyword
+	* No space following a keyword
 * Naming - 1048
 	* Underscores
 	* Hungarian Notation (false-positives)
