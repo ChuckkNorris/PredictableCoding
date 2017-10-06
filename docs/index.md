@@ -413,23 +413,3 @@ StyleCop can be run at the project or solution level. If ran at the solution lev
 
 Once Stylecop has finished running, you will see the violations in the error-list. Each violation description will start with a rule number, SAXXXX. If the rule description is not clear on how to fix the problem, this site can be useful:  
 <a href="http://stylecop.soyuz5.com/StyleCop%20Rules.html">Style Cop Rules Guide</a>
-
-### Examples
-
-Full StyleCop run on Infrastructure Project (EB) turned up __19k+__ violations. Breakdown of violations:
-
-* Documentation - 5248
-	* Missing summaries and document headers
-* Readability - 4719
-	* lacking "this" prefix
-* Layout - 3082
-	* Two-line if-else statements
-* Ordering - 3711
-	* "Using" directives outside of namespace
-* Spacing - 1659
-	* No space following a keyword
-* Naming - 1048
-	* Underscores
-	* Hungarian Notation (false-positives)
-	* "cda_" beginnings
-* Maintainability - 176
