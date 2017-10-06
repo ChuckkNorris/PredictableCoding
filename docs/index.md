@@ -13,7 +13,7 @@ These tips and tricks are designed to help you write cleaner, more maintainable 
 
 ### Why naming matters
 Despite our best efforts, we spend far more time _reading_ others' code than we do writing our own (some have shown the ratio to be as high as 10:1). In light of
-this fact, the skill of writing code that can be easily read and understood is invaludable.
+this fact, the skill of writing code that can be easily read and understood is invaluable.
 
 Can you think of anything in software that doesn't have a name?  Likely not; names are at the root of almost all communication (to the point of being burdensome). 
 What we want to think about today is how we can take the "burden" of naming and turn it into an advantage.
@@ -163,13 +163,13 @@ Enter, terseness:
 
 __Terse:__ *Using minimal ~~words~~ syntax, devoid of superfluity.*
 
-Many examples of terse code affirm the perception that it is anti-readable code. And while readability should always be high on any developer's priority list,
+Many examples of terse code affirm the perception that it is "anti" readable code. And while readability should always be high on any developer's priority list,
 there is an argument to be made that sometimes less readable code is preferred over verbose code.
 
-Before moving on, let's clarify what terse code is **NOT**:
+Let's clarify what terse code is **NOT**:
 - Writing single letter, abbreviated, or encoded variable names.
 - Horribly abusing white space in a meaningless attempt to minimize lines of code.
-- Indiscriminately chaining sequences of complicated syntax because "it compiles" and does what it's supposed to.
+- Indiscriminately chaining sequences of complicated syntax because "it compiles" and still meets requirements.
 
 Instead, let's consider terse code to be code that takes advantages of higher level language features to abstract common logical patterns, resulting in less syntax
 and less code. An example we have likely all seen is the ternary operator:
