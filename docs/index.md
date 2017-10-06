@@ -102,7 +102,6 @@ Let's take the situation when you have code that does the following:
 - Returns the response in a usable instance of an object
 
 The following is an example of what NOT to do:
-[BadDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BadDBSearch.cs)
 
 <script src="https://gist.github.com/cjc061000/da5ed3daef1fd20aa7d3b492de9c5a6c.js"></script>
 
@@ -112,8 +111,6 @@ The Key: limit functions to one thing at a time
 
 
 Here is a better version of the code 
-
-[BetterDBSearch.cs](https://github.com/ChuckkNorris/PredictableCoding/blob/master/src/EasyToTestCode/BetterDBSearch.cs)
 
 <script src="https://gist.github.com/cjc061000/28e46bd5eb6574a352fadb5c4dd71637.js"></script>
 
